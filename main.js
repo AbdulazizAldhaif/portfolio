@@ -357,19 +357,6 @@
     });
   }
 
-  /* ---------- 3D room floor ---------- */
-  const floor = $('.room-floor');
-  if (floor) {
-    ScrollTrigger.create({
-      trigger: '.cases', start: 'top 65%', end: 'bottom 25%',
-      onToggle: (s) => gsap.to(floor, { autoAlpha: s.isActive ? 1 : 0, duration: 0.6, overwrite: 'auto' })
-    });
-    gsap.fromTo('.room-grid', { y: 40 }, {
-      y: -60, ease: 'none',
-      scrollTrigger: { trigger: '.cases', start: 'top bottom', end: 'bottom top', scrub: true }
-    });
-  }
-
   /* ---------- Case studies ---------- */
   const didTriggers = [];
 
@@ -463,6 +450,22 @@
     return tl;
   }
 
+  /* Everything below the fold is built in idle time, in three short tasks, so
+     startup never blocks the main thread while the hero is painting. The CSS
+     pre-hides these sections, so deferring their setup is invisible. */
+  function initBelowFold() {
+  const floor = $('.room-floor');
+  if (floor) {
+    ScrollTrigger.create({
+      trigger: '.cases', start: 'top 65%', end: 'bottom 25%',
+      onToggle: (s) => gsap.to(floor, { autoAlpha: s.isActive ? 1 : 0, duration: 0.6, overwrite: 'auto' })
+    });
+    gsap.fromTo('.room-grid', { y: 40 }, {
+      y: -60, ease: 'none',
+      scrollTrigger: { trigger: '.cases', start: 'top bottom', end: 'bottom top', scrub: true }
+    });
+  }
+
   $$('.case').forEach((caseEl) => {
     gsap.set(caseEl, { transformOrigin: '50% 30%' });
 
@@ -516,6 +519,9 @@
     onEnter: (batch) => gsap.to(batch, { autoAlpha: 1, y: 0, stagger: 0.09, duration: 0.6, ease: 'power3.out' })
   });
 
+  }
+
+  function initBandAndHint() {
   /* ---------- Marquee: fill the full bar, loop seamlessly, react to velocity ---------- */
   const track = $('.marquee-track');
   let marqueeLoop = null;
@@ -590,6 +596,9 @@
     if (lenis) lenis.on('scroll', dismiss);
   }
 
+  }
+
+  function initPointerFx() {
   /* ---------- Magnetics, attract particles, card texture ---------- */
   if (finePointer) {
     $$('[data-magnet]').forEach((btn) => {
@@ -639,6 +648,15 @@
       card.addEventListener('pointerleave', () => gsap.to(fx, { autoAlpha: 0, duration: 0.2, ease: 'power2.out' }));
     });
   }
+
+  }
+
+  const idle = (fn) => ('requestIdleCallback' in window) ? requestIdleCallback(fn, { timeout: 900 }) : setTimeout(fn, 80);
+  idle(() => {
+    initBelowFold();
+    ScrollTrigger.refresh();
+    idle(() => { initBandAndHint(); idle(initPointerFx); });
+  });
 
   /* ---------- Language toggle (full GSAP path) ---------- */
   if (toggleBtn) {
