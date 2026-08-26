@@ -71,7 +71,7 @@ img{max-width:100%}
 /* ---------- Case studies ---------- */
 .case{padding:38px 0 46px;border-top:1px solid var(--line)}
 .case-top{display:flex;justify-content:space-between;align-items:baseline}
-.kicker{font-family:var(--mono);font-size:10px;letter-spacing:.2em}
+.kicker{font-family:var(--mono);font-size:10px;letter-spacing:.2em;font-weight:400;margin:0}
 .kicker.gold{color:var(--gold)}
 .kicker.dim{font-size:9.5px;letter-spacing:.18em;color:rgba(242,237,228,.45)}
 .kicker.gold-dim{font-size:9.5px;letter-spacing:.18em;color:var(--gold)}
@@ -117,7 +117,7 @@ img{max-width:100%}
 .contact-title{margin:0;font-size:clamp(30px,8vw,38px);font-weight:600;letter-spacing:-.01em;line-height:1.05}
 .contact-sub{margin:8px 0 0;font-size:13px;line-height:1.5;color:rgba(242,237,228,.6)}
 .lanes{margin-top:24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
-.lane{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:9px 9px 9px 16px;border:1px solid rgba(231,180,90,.55)}
+.lane{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:9px;padding-inline-start:16px;border:1px solid rgba(231,180,90,.55)}
 .lane-label{color:var(--gold);font-family:var(--mono);font-size:11.5px;letter-spacing:.06em}
 .lane-actions{display:flex;gap:8px}
 .lane-btn{width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(231,180,90,.45);color:var(--gold);transition:background-color .18s cubic-bezier(.33,1,.68,1),color .18s cubic-bezier(.33,1,.68,1),border-color .18s cubic-bezier(.33,1,.68,1)}
@@ -140,6 +140,7 @@ img{max-width:100%}
 .progress{position:fixed;top:0;left:0;right:0;height:2px;z-index:80;pointer-events:none;display:none}
 .gsap .progress{display:block}
 .progress-fill{display:block;height:100%;background:var(--gold);transform:scaleX(0);transform-origin:0 50%}
+html.ar .progress-fill{transform-origin:100% 50%}
 
 /* Film grain (static — zero runtime cost) */
 .grain{position:fixed;inset:0;z-index:70;pointer-events:none;opacity:.055;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.7 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:180px 180px}
@@ -158,7 +159,7 @@ img{max-width:100%}
 .shimmer .sheen{position:absolute;inset:0;pointer-events:none;background:linear-gradient(100deg,transparent 25%,rgba(242,237,228,.5) 50%,transparent 75%);transform:translateX(-130%)}
 
 /* Typewriter caret */
-.caret{display:inline-block;width:7px;height:11px;margin-left:3px;background:var(--gold);vertical-align:-1px}
+.caret{display:inline-block;width:7px;height:11px;margin-inline-start:3px;background:var(--gold);vertical-align:-1px}
 .hero-meta{min-height:3.6em}
 
 /* 3D room — perspective grid floor behind the case studies.
@@ -202,7 +203,8 @@ img{max-width:100%}
 
 /* Language toggle */
 .hero-top-right{display:flex;align-items:center;gap:14px}
-.lang-toggle{font-family:var(--arabic);font-size:12px;line-height:1;background:none;border:1px solid rgba(231,180,90,.45);color:var(--gold);padding:5px 10px;cursor:pointer;letter-spacing:0;transition:background-color .18s cubic-bezier(.33,1,.68,1),color .18s cubic-bezier(.33,1,.68,1)}
+.lang-toggle{display:none;font-family:var(--arabic);font-size:12px;line-height:1;background:none;border:1px solid rgba(231,180,90,.45);color:var(--gold);padding:5px 10px;cursor:pointer;letter-spacing:0;transition:background-color .18s cubic-bezier(.33,1,.68,1),color .18s cubic-bezier(.33,1,.68,1)}
+.js .lang-toggle{display:inline-block}
 .lang-toggle:hover{background:var(--gold);color:var(--bg)}
 .lang-toggle:focus-visible{outline:1px solid var(--gold);outline-offset:2px}
 html.ar .lang-toggle{font-family:var(--mono);font-size:10px;letter-spacing:.14em}
@@ -211,9 +213,8 @@ html.ar .lang-toggle{font-family:var(--mono);font-size:10px;letter-spacing:.14em
 .case-logo{width:32px;height:32px;flex:none;align-self:center;position:relative;display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(231,180,90,.4);background:rgba(231,180,90,.06);overflow:hidden}
 .case-logo span{font-family:var(--arabic);font-weight:700;font-size:15px;color:var(--gold);line-height:1}
 .case-logo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1}
-.case-logo--sm{width:22px;height:22px;margin-right:8px;vertical-align:-6px}
+.case-logo--sm{width:22px;height:22px;margin-inline-end:8px;vertical-align:-6px}
 .case-logo--sm span{font-size:11px}
-html.ar .case-logo--sm{margin-right:0;margin-left:8px}
 
 /* Giant section numerals */
 .case{position:relative}
@@ -244,6 +245,8 @@ html.ar .quote p{font-size:17.5px;line-height:1.65}
 html.ar .stat-label{font-family:var(--arabic);letter-spacing:0;font-size:11px}
 html.ar .lane-label{font-family:var(--arabic);letter-spacing:0;font-size:13.5px}
 html.ar .card-title{font-family:var(--sans)}
+html.ar .card-ar{font-family:var(--sans);font-weight:600}
+html.ar .contact-title{letter-spacing:0}
 html.ar .card-desc{line-height:1.75}
 html.ar .contact-sub{line-height:1.7}
 

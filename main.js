@@ -17,42 +17,50 @@
      ================================================================ */
   const EMAIL = 'abdulaziz.aldhif@gmail.com';
   const WA_AR = {
-    hiring: 'مرحبًا عبدالعزيز — اطلعت على ملفك وأود التحدث عن وظيفة محلل أعمال.',
+    hiring: 'مرحبًا عبدالعزيز — اطلعت على معرض أعمالك وأود التحدث عن وظيفة محلل أعمال.',
     coop: 'مرحبًا عبدالعزيز — أود مناقشة فرصة تدريب تعاوني.',
     collab: 'مرحبًا عبدالعزيز — لدي فكرة تعاون.'
   };
   const MAIL_AR = {
-    hiring: { s: 'فرصة محلل أعمال — عبر موقعك', b: 'مرحبًا عبدالعزيز،\r\n\r\nاطلعت على ملفك وأود مناقشة فرصة محلل أعمال معك.\r\n\r\nالشركة: \r\nالدور: \r\n\r\nمع التحية،' },
-    coop: { s: 'فرصة تدريب تعاوني — عبر موقعك', b: 'مرحبًا عبدالعزيز،\r\n\r\nنود مناقشة فرصة تدريب تعاوني معك.\r\n\r\nالجهة: \r\nالبرنامج / الفترة: \r\n\r\nمع التحية،' },
-    collab: { s: 'مقترح تعاون', b: 'مرحبًا عبدالعزيز،\r\n\r\nلدي فكرة تعاون أود مشاركتها معك.\r\n\r\nالفكرة في سطر: \r\n\r\nمع التحية،' }
+    hiring: { s: 'فرصة محلل أعمال — عبر معرض أعمالك', b: 'مرحبًا عبدالعزيز،\r\n\r\nاطلعت على معرض أعمالك وأود مناقشة فرصة محلل أعمال معك.\r\n\r\nالشركة: \r\nالمسمى الوظيفي: \r\n\r\nمع التحية،' },
+    coop: { s: 'فرصة تدريب تعاوني — عبر معرض أعمالك', b: 'مرحبًا عبدالعزيز،\r\n\r\nنود مناقشة فرصة تدريب تعاوني معك.\r\n\r\nالجهة: \r\nالبرنامج / الفترة: \r\n\r\nمع التحية،' },
+    collab: { s: 'مقترح تعاون', b: 'مرحبًا عبدالعزيز،\r\n\r\nلدي فكرة تعاون أود مشاركتها معك.\r\n\r\nالفكرة في سطر واحد: \r\n\r\nمع التحية،' }
+  };
+  // Accessible names in Arabic mode (keyed by the English aria-label in the HTML)
+  const ARIA_AR = {
+    'Selected work': 'أعمال مختارة', 'Also built': 'أعمال أخرى', 'Contact': 'تواصل',
+    'WhatsApp': 'واتساب', 'LinkedIn': 'لينكدإن', 'GitHub': 'جيت هب', 'Email': 'البريد الإلكتروني',
+    'WhatsApp — hiring': 'واتساب — توظيف', 'Email — hiring': 'بريد — توظيف',
+    'WhatsApp — coop / training': 'واتساب — تدريب تعاوني', 'Email — coop / training': 'بريد — تدريب تعاوني',
+    'WhatsApp — collaboration': 'واتساب — تعاون', 'Email — collaboration': 'بريد — تعاون'
   };
 
   const CASES = [
     {
       title: { en: 'Eidaah', ar: 'إيضاح' }, tag: { en: 'إيضاح', ar: 'Eidaah' },
       kicker: { en: 'SELECTED WORK — 01', ar: 'أعمال مختارة — 01' },
-      meta: { en: 'AI study platform for Arabic-speaking university students — built by a 3-person team.', ar: 'منصة مذاكرة بالذكاء الاصطناعي لطلاب الجامعات الناطقين بالعربية — من فريق من 3 أفراد.' },
+      meta: { en: 'AI study platform for Arabic-speaking university students — built by a 3-person team.', ar: 'منصة مذاكرة بالذكاء الاصطناعي لطلاب الجامعات الناطقين بالعربية — طوّره فريق من 3 أفراد.' },
       problem: { en: 'Course material lives in scattered slides and videos, with no interactive way to study it in Arabic.', ar: 'المحتوى الدراسي مبعثر بين شرائح وفيديوهات، دون طريقة تفاعلية لمذاكرته بالعربية.' },
       did: { en: 'Designed the 13-table database schema and security policies, built login and content governance — students upload, admins approve — and redesigned the analyzer that turns any PDF or PPTX into a 7-stage guided study flow with auto-graded quizzes.', ar: 'صممت قاعدة البيانات بجداولها الثلاثة عشر وسياسات الأمان، وبنيت تسجيل الدخول وحوكمة المحتوى — الطلاب يرفعون والمشرفون يعتمدون — وأعدت تصميم المحلل الذي يحول أي ملف PDF أو PPTX إلى مسار مذاكرة موجه من 7 مراحل مع اختبارات مصححة تلقائيًا.' },
       quote: { en: 'Every file is processed by the LLM <span class="gold">once at approval</span> and stored, so AI cost stays flat no matter how many students study it.', ar: 'كل ملف تتم معالجته بالنموذج اللغوي <span class="gold">مرة واحدة عند الاعتماد</span> ثم يُخزَّن، فتبقى تكلفة الذكاء الاصطناعي ثابتة مهما زاد عدد الطلاب.' },
-      stats: { en: ['API ENDPOINTS', 'SCREENS', 'DB TABLES', 'PASSING TESTS'], ar: ['نقاط API', 'شاشة', 'جدول بيانات', 'اختبارًا ناجحًا'] }
+      stats: { en: ['API ENDPOINTS', 'SCREENS', 'DB TABLES', 'PASSING TESTS'], ar: ['نقطة API', 'شاشة', 'جدول قاعدة بيانات', 'اختبارًا ناجحًا'] }
     },
     {
       title: { en: "Sahifat Itma'inn", ar: 'صحيفة اطمئن' }, tag: { en: 'صحيفة اطمئن', ar: "Sahifat Itma'inn" },
       kicker: { en: 'SELECTED WORK — 02', ar: 'أعمال مختارة — 02' },
       meta: { en: 'Bilingual newspaper platform plus internal newsroom system — built solo.', ar: 'منصة صحيفة ثنائية اللغة مع نظام داخلي لغرفة الأخبار — بناء فردي.' },
       problem: { en: '34 volunteers coordinated through spreadsheets and chat; articles had no tracked path to publication.', ar: '34 متطوعًا ينسقون عبر جداول ومحادثات؛ والمقالات بلا مسار واضح حتى النشر.' },
-      did: { en: 'Built everything: the public reading site — page-flip reader, offline mode, email-code accounts — and the internal system with role management, schedules, and a 5-stage editorial pipeline: writing, sharia review, proofreading, translation, design.', ar: 'بنيت كل شيء: موقع القراءة العام — قارئ بتقليب الصفحات، ووضع دون اتصال، وحسابات برمز البريد — والنظام الداخلي بإدارة الأدوار والجداول وخط تحرير من 5 مراحل: كتابة، مراجعة شرعية، تدقيق، ترجمة، تصميم.' },
-      quote: { en: 'Permissions resolve through <span class="gold">one SQL function</span> mirrored client-side, so unknown roles fail closed and can never escalate.', ar: 'الصلاحيات تُحسم عبر <span class="gold">دالة SQL واحدة</span> تنعكس في الواجهة، فأي دور غير معروف يُرفض تلقائيًا ولا يمكنه التصعيد.' },
-      stats: { en: ['SCREENS × LANGS', 'DB TABLES', 'COMMITS', 'DEVELOPER'], ar: ['شاشة × لغتين', 'جدول بيانات', 'إيداعًا', 'مطور'] }
+      did: { en: 'Built everything: the public reading site — page-flip reader, offline mode, email-code accounts — and the internal system with role management, schedules, and a 5-stage editorial pipeline: writing, sharia review, proofreading, translation, design.', ar: 'بنيت كل شيء: موقع القراءة العام — قارئ بتقليب الصفحات، ووضع دون اتصال، وحسابات برمز البريد — والنظام الداخلي بإدارة الأدوار والجداول ومسار تحريري من 5 مراحل: كتابة، مراجعة شرعية، تدقيق، ترجمة، تصميم.' },
+      quote: { en: 'Permissions resolve through <span class="gold">one SQL function</span> mirrored client-side, so unknown roles fail closed and can never escalate.', ar: 'الصلاحيات تُحسم عبر <span class="gold">دالة SQL واحدة</span> تنعكس في الواجهة، فأي دور غير معروف يُرفض تلقائيًا ولا يمكنه تصعيد صلاحياته.' },
+      stats: { en: ['SCREENS × LANGS', 'DB TABLES', 'COMMITS', 'DEVELOPER'], ar: ['شاشة × لغتين', 'جدول قاعدة بيانات', 'إيداعًا', 'مطور'] }
     },
     {
       title: { en: 'Masari', ar: 'مساري' }, tag: { en: 'مساري', ar: 'Masari' },
       kicker: { en: 'SELECTED WORK — 03', ar: 'أعمال مختارة — 03' },
-      meta: { en: 'Turns an IMSIU degree plan into an interactive term-by-term graduation roadmap — 2-person project; I owned logic and data quality.', ar: 'يحوّل خطة تخرج جامعة الإمام إلى خارطة تفاعلية فصلًا بفصل — مشروع ثنائي؛ توليت المنطق وجودة البيانات.' },
-      problem: { en: 'Students plan registration from static PDFs and guess at prerequisite chains; one wrong guess delays graduation.', ar: 'يخطط الطلاب تسجيلهم من ملفات PDF ثابتة ويخمنون سلاسل المتطلبات؛ تخمين واحد خاطئ يؤخر التخرج.' },
-      did: { en: 'Extracted the scheduling logic into tested modules with a 49-test CI suite, built prerequisite overrides and fastest-graduation mode, and wrote a validator that cross-checks our data against official PDFs — it caught 4 errors in the university’s own documents.', ar: 'استخرجت منطق الجدولة في وحدات مختبرة بحزمة CI من 49 اختبارًا، وبنيت تجاوزات المتطلبات ووضع أسرع تخرج، وكتبت مدققًا يقارن بياناتنا بالملفات الرسمية — فاكتشف 4 أخطاء في وثائق الجامعة نفسها.' },
-      quote: { en: '<span class="gold">Never trust the source data.</span>', ar: '<span class="gold">لا تثق بمصدر البيانات أبدًا.</span>' },
+      meta: { en: 'Turns an IMSIU degree plan into an interactive term-by-term graduation roadmap — 2-person project; I owned logic and data quality.', ar: 'يحوّل الخطة الدراسية في جامعة الإمام إلى خارطة تخرج تفاعلية فصلًا بفصل — مشروع من شخصين؛ توليت المنطق وجودة البيانات.' },
+      problem: { en: 'Students plan registration from static PDFs and guess at prerequisite chains; one wrong guess delays graduation.', ar: 'يخطط الطلاب لتسجيلهم اعتمادًا على ملفات PDF ثابتة ويخمنون سلاسل المتطلبات السابقة؛ تخمين واحد خاطئ يؤخر التخرج.' },
+      did: { en: 'Extracted the scheduling logic into tested modules with a 49-test CI suite, built prerequisite overrides and fastest-graduation mode, and wrote a validator that cross-checks our data against official PDFs — it caught 4 errors in the university’s own documents.', ar: 'فصلت منطق الجدولة في وحدات مختبرة بحزمة CI من 49 اختبارًا، وبنيت خاصية تجاوز المتطلبات السابقة ووضع أسرع تخرج، وكتبت مدققًا يقارن بياناتنا بملفات PDF الرسمية — فاكتشف 4 أخطاء في وثائق الجامعة نفسها.' },
+      quote: { en: '<span class="gold">Never trust the source data.</span>', ar: '<span class="gold">لا تثق ببيانات المصدر أبدًا.</span>' },
       stats: { en: ['DEGREE PLANS', 'TESTS', 'CLOSED ISSUES'], ar: ['خطط دراسية', 'اختبارًا', 'مشكلة مغلقة'] }
     }
   ];
@@ -64,7 +72,7 @@
     name2: { en: 'Aldhaif', ar: 'الضيف' },
     ghost: { en: 'عبدالعزيز الضيف', ar: 'Abdulaziz Aldhaif' },
     lede: { en: 'I turn messy processes into <span class="gold shimmer">working systems</span>.', ar: 'أحوّل العمليات الفوضوية إلى <span class="gold shimmer">أنظمة تعمل</span>.' },
-    meta1: { en: 'Final-year Information Systems @ IMSIU', ar: 'سنة أخيرة — نظم المعلومات @ جامعة الإمام' },
+    meta1: { en: 'Final-year Information Systems @ IMSIU', ar: 'سنة أخيرة — نظم المعلومات في جامعة الإمام' },
     meta2: { en: 'Business Analyst track · Riyadh', ar: 'مسار محلل الأعمال · الرياض' },
     scroll: { en: 'SCROLL', ar: 'مرر' },
     caseTag: { en: 'دراسة حالة', ar: 'CASE STUDY' },
@@ -75,7 +83,7 @@
     alsoTag: { en: 'أعمال أخرى', ar: 'ALSO BUILT' },
     alula: { en: 'Full-stack PHP/MySQL tourism site with booking, reviews, and a bilingual chatbot.', ar: 'موقع سياحي متكامل بـ PHP/MySQL مع حجوزات وتقييمات وروبوت محادثة ثنائي اللغة.' },
     sar: { en: 'Responsive front end simulating the Saudi Railways portal, framework-free.', ar: 'واجهة أمامية متجاوبة تحاكي بوابة الخطوط الحديدية السعودية، بدون أطر عمل.' },
-    athar: { en: 'Arabic-first e-commerce storefront for a Saudi oud & perfume brand: filterable catalogue, guest cart and checkout with shipping rules, order tracking by order number + phone, and customer reviews. Payments simulated by design (course project). Next.js, Tailwind, Supabase with row-level security.', ar: 'متجر إلكتروني عربي أولًا لعلامة سعودية للعود والعطور: كتالوج قابل للتصفية، وسلة وإتمام شراء كضيف مع قواعد شحن، وتتبع الطلب برقم الطلب والجوال، وتقييمات العملاء. الدفع محاكى عمدًا (مشروع مقرر دراسي). Next.js وTailwind وSupabase مع أمان على مستوى الصفوف.' },
+    athar: { en: 'Arabic-first e-commerce storefront for a Saudi oud & perfume brand: filterable catalogue, guest cart and checkout with shipping rules, order tracking by order number + phone, and customer reviews. Payments simulated by design (course project). Next.js, Tailwind, Supabase with row-level security.', ar: 'متجر إلكتروني يضع العربية أولًا لعلامة سعودية للعود والعطور: كتالوج قابل للتصفية، وسلة وإتمام شراء كضيف مع قواعد شحن، وتتبع الطلب برقم الطلب والجوال، وتقييمات العملاء. الدفع محاكاة مقصودة (مشروع مقرر دراسي). Next.js وTailwind وSupabase مع أمان على مستوى الصفوف.' },
     contactK: { en: 'CONTACT', ar: 'تواصل' },
     contactTag: { en: 'تواصل معي', ar: 'CONTACT' },
     talk: { en: 'Talk to me', ar: 'تحدث معي' },
@@ -96,7 +104,9 @@
     try { localStorage.setItem('lang', next); } catch (e) { /* private mode */ }
 
     const setText = (sel, val) => $$(sel).forEach((el) => { el.textContent = val; });
-    setText('.i18n-city', T.city[next]);
+    // Accent elements hold the *other* language: flip their lang/dir with the text
+    const accent = (el) => { el.lang = next === 'ar' ? 'en' : 'ar'; el.dir = next === 'ar' ? 'ltr' : 'rtl'; };
+    $$('.i18n-city').forEach((el) => { el.textContent = T.city[next]; accent(el); });
     const toggle = $('.lang-toggle');
     if (toggle) {
       toggle.textContent = T.toggle[next];
@@ -117,7 +127,9 @@
     $$('.case').forEach((caseEl, i) => {
       const c = CASES[i];
       $('.kicker', caseEl).textContent = c.kicker[next];
-      $('.case-top .ar-tag', caseEl).textContent = T.caseTag[next];
+      const caseTag = $('.case-top .ar-tag', caseEl);
+      caseTag.textContent = T.caseTag[next];
+      accent(caseTag);
       $('.case-title h2', caseEl).textContent = c.title[next];
       const tagEl = $('.case-ar', caseEl);
       tagEl.textContent = c.tag[next];
@@ -144,6 +156,21 @@
     descs[0].textContent = T.alula[next];
     descs[1].textContent = T.sar[next];
     descs[2].textContent = T.athar[next];
+    // Athar card mirrors the case-title concept: brand text and accent swap languages
+    const atharTitle = $('.card-title', descs[2].parentElement);
+    const atharAccent = $('.card-ar', atharTitle);
+    const atharText = Array.from(atharTitle.childNodes).find((n) => n.nodeType === 3 && n.nodeValue.trim());
+    if (atharText) atharText.nodeValue = next === 'ar' ? 'أثَر ' : 'Athar ';
+    atharAccent.textContent = next === 'ar' ? 'Athar' : 'أثَر';
+    accent(atharAccent);
+
+    // Accessible names follow the page language
+    $$('[aria-label]').forEach((el) => {
+      if (el.classList.contains('lang-toggle')) return;
+      if (!el.dataset.ariaEn) el.dataset.ariaEn = el.getAttribute('aria-label');
+      const en = el.dataset.ariaEn;
+      el.setAttribute('aria-label', next === 'ar' && ARIA_AR[en] ? ARIA_AR[en] : en);
+    });
 
     const contact = $('.contact');
     $('.kicker.gold', contact).textContent = T.contactK[next];
@@ -220,7 +247,10 @@
      ================================================================ */
   doc.classList.add('gsap');
   gsap.registerPlugin(ScrollTrigger);
-  gsap.defaults({ ease: 'power2.out', duration: 0.6, overwrite: 'auto' });
+  // No global overwrite: the hero exit scrub and the entrance timeline touch the
+  // same properties, and an auto-overwrite would kill the entrance on early scroll.
+  gsap.defaults({ ease: 'power2.out', duration: 0.6 });
+  let skipTextFx = false; // set while force-completing the hero timeline
 
   let lenis = null;
   if (window.Lenis) {
@@ -255,7 +285,7 @@
 
   function runShimmer() {
     const host = $('.shimmer');
-    if (!host) return;
+    if (!host || skipTextFx) return;
     let sheen = $('.sheen', host);
     if (!sheen) {
       sheen = document.createElement('i');
@@ -270,6 +300,7 @@
   // Typewriter on the first meta line
   const metaEl = $('.hero-meta');
   function runTypewriter() {
+    if (skipTextFx) return;
     const parts = metaEl.innerHTML.split('<br>');
     if (parts.length !== 2) return;
     const line1 = parts[0].replace(/<[^>]*>/g, '');
@@ -299,15 +330,20 @@
     onToggle: (s) => s.isActive ? beamTl.play() : beamTl.pause()
   });
 
-  // Cinematic exit: the ghost swells past the camera while the name sinks
+  // Cinematic exit: the ghost swells past the camera while the name sinks.
+  // Explicit from-values + no immediate render so it never captures the
+  // entrance's hidden state as its starting point.
+  const finishHero = () => {
+    if (heroTl.progress() < 1) { skipTextFx = true; heroTl.progress(1); skipTextFx = false; }
+  };
   gsap.timeline({
-    scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom 25%', scrub: true },
-    defaults: { ease: 'none' }
+    scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom 25%', scrub: true, onEnter: finishHero },
+    defaults: { ease: 'none', immediateRender: false }
   })
-    .to('.hero-ghost', { yPercent: 30, scale: 1.22, autoAlpha: 0.25 }, 0)
-    .to('.hero-name', { yPercent: -12 }, 0)
-    .to(['.hero-lede', '.hero-meta', '.hero-scroll'], { yPercent: -18, autoAlpha: 0.35, stagger: 0 }, 0)
-    .to('.hero-fx', { autoAlpha: 0.25 }, 0);
+    .fromTo('.hero-ghost', { yPercent: 0, scale: 1, autoAlpha: 1 }, { yPercent: 30, scale: 1.22, autoAlpha: 0.25 }, 0)
+    .fromTo('.hero-name', { yPercent: 0 }, { yPercent: -12 }, 0)
+    .fromTo(['.hero-lede', '.hero-meta', '.hero-scroll'], { yPercent: 0, autoAlpha: 1 }, { yPercent: -18, autoAlpha: 0.35 }, 0)
+    .fromTo('.hero-fx', { autoAlpha: 1 }, { autoAlpha: 0.25 }, 0);
 
   if (finePointer) {
     const gx = gsap.quickTo('.hero-ghost', 'x', { duration: 0.6, ease: 'power3.out' });
@@ -370,26 +406,11 @@
     });
   }
 
-  $$('.case').forEach((caseEl) => {
-    gsap.set(caseEl, { transformOrigin: '50% 30%' });
-
-    // Dolly in/out — pseudo-depth, pure 2D compositing
-    gsap.fromTo(caseEl, { scale: 0.93, y: 70, autoAlpha: 0.12 }, {
-      scale: 1, y: 0, autoAlpha: 1, ease: 'none', overwrite: false,
-      scrollTrigger: { trigger: caseEl, start: 'top 96%', end: 'top 45%', scrub: true }
-    });
-    gsap.fromTo(caseEl, { scale: 1, y: 0, autoAlpha: 1 }, {
-      scale: 1.03, y: -44, autoAlpha: 0.3, ease: 'none', immediateRender: false, overwrite: false,
-      scrollTrigger: { trigger: caseEl, start: 'bottom 40%', end: 'bottom 4%', scrub: true }
-    });
-
-    // Giant numeral: parallax drift + fade-in
-    const num = $('.case-num', caseEl);
-    gsap.fromTo(num, { yPercent: 26, autoAlpha: 0 }, {
-      yPercent: -20, autoAlpha: 1, ease: 'none',
-      scrollTrigger: { trigger: caseEl, start: 'top 90%', end: 'bottom top', scrub: true }
-    });
-
+  // Internal choreography is language-dependent (Latin titles split per character,
+  // accents enter from the reading side), so it is built by a function that the
+  // language toggle can re-run for cases that have not been revealed yet.
+  const caseState = [];
+  function buildCaseInternals(caseEl) {
     const top = $('.case-top', caseEl), titleRow = $('.case-title', caseEl),
       title = $('.case-title h2', caseEl), logo = $('.case-logo', caseEl),
       ar = $('.case-ar', caseEl), caseMeta = $('.case-meta', caseEl),
@@ -397,11 +418,13 @@
       stats = $('.stats', caseEl), cells = $$('.stat', caseEl),
       stack = $('.stack', caseEl), cta = $('.cta', caseEl);
 
-    // Gold rule that draws itself across the top of the quote
-    const rule = document.createElement('span');
-    rule.className = 'q-rule';
-    rule.setAttribute('aria-hidden', 'true');
-    quote.prepend(rule);
+    let rule = $('.q-rule', quote);
+    if (!rule) {
+      rule = document.createElement('span');
+      rule.className = 'q-rule';
+      rule.setAttribute('aria-hidden', 'true');
+      quote.prepend(rule);
+    }
 
     gsap.set([top, caseMeta, ...blocks, quote, stack, cta], { autoAlpha: 0, y: 22 });
     gsap.set(titleRow, { autoAlpha: 1, y: 0 });
@@ -411,7 +434,6 @@
     gsap.set(cells, { autoAlpha: 0, y: 14, scale: 0.97 });
     gsap.set(rule, { scaleX: 0, transformOrigin: lang === 'ar' ? '100% 50%' : '0% 50%' });
 
-    // Per-character clip reveal for Latin titles; whole-word rise for Arabic
     let titleTargets, titleVars;
     if (lang === 'en') {
       titleTargets = splitTitle(title);
@@ -438,6 +460,30 @@
       .to(stats, { autoAlpha: 1, y: 0, duration: 0.4 }, 0.72)
       .to(cells, { autoAlpha: 1, y: 0, scale: 1, stagger: 0.08 }, 0.77)
       .to([stack, cta], { autoAlpha: 1, y: 0, stagger: 0.1 }, 0.92);
+    return tl;
+  }
+
+  $$('.case').forEach((caseEl) => {
+    gsap.set(caseEl, { transformOrigin: '50% 30%' });
+
+    // Dolly in/out — pseudo-depth, pure 2D compositing
+    gsap.fromTo(caseEl, { scale: 0.93, y: 70, autoAlpha: 0.12 }, {
+      scale: 1, y: 0, autoAlpha: 1, ease: 'none', overwrite: false,
+      scrollTrigger: { trigger: caseEl, start: 'top 96%', end: 'top 45%', scrub: true }
+    });
+    gsap.fromTo(caseEl, { scale: 1, y: 0, autoAlpha: 1 }, {
+      scale: 1.03, y: -44, autoAlpha: 0.3, ease: 'none', immediateRender: false, overwrite: false,
+      scrollTrigger: { trigger: caseEl, start: 'bottom 40%', end: 'bottom 4%', scrub: true }
+    });
+
+    // Giant numeral: parallax drift + fade-in
+    const num = $('.case-num', caseEl);
+    gsap.fromTo(num, { yPercent: 26, autoAlpha: 0 }, {
+      yPercent: -20, autoAlpha: 1, ease: 'none',
+      scrollTrigger: { trigger: caseEl, start: 'top 90%', end: 'bottom top', scrub: true }
+    });
+
+    caseState.push({ el: caseEl, tl: buildCaseInternals(caseEl) });
 
     gsap.to($('.case-top .ar-tag', caseEl), {
       yPercent: 60, ease: 'none',
@@ -489,11 +535,22 @@
       });
     };
     build();
-    let rw = null;
-    window.addEventListener('resize', () => { clearTimeout(rw); rw = setTimeout(build, 250); });
+    let bandActive = false, lastW = window.innerWidth, rw = null;
+    // Only rebuild on real width changes — mobile URL-bar show/hide fires resize too
+    window.addEventListener('resize', () => {
+      clearTimeout(rw);
+      rw = setTimeout(() => {
+        if (window.innerWidth === lastW) return;
+        lastW = window.innerWidth;
+        const p = marqueeLoop ? marqueeLoop.progress() : 0;
+        build();
+        marqueeLoop.progress(p);
+        if (!bandActive) marqueeLoop.pause();
+      }, 250);
+    });
     ScrollTrigger.create({
       trigger: '.marquee-band', start: 'top bottom', end: 'bottom top',
-      onToggle: (s) => marqueeLoop && (s.isActive ? marqueeLoop.play() : marqueeLoop.pause())
+      onToggle: (s) => { bandActive = s.isActive; if (marqueeLoop) s.isActive ? marqueeLoop.play() : marqueeLoop.pause(); }
     });
     // Scroll velocity nudges the belt
     if (lenis) {
@@ -586,12 +643,21 @@
   /* ---------- Language toggle (full GSAP path) ---------- */
   if (toggleBtn) {
     toggleBtn.addEventListener('click', () => {
-      heroTl.progress(1); // finish any running entrance before swapping text
+      finishHero(); // complete any running entrance before swapping text
       const next = lang === 'ar' ? 'en' : 'ar';
       applyLang(next);
-      // Re-shown text must be visible even where entrance timelines already ran
-      $$('.case').forEach((caseEl) => {
-        gsap.set($('.case-title h2', caseEl), { clearProps: 'all', autoAlpha: 1, y: 0 });
+      caseState.forEach((s) => {
+        const st = s.tl.scrollTrigger;
+        const revealed = s.tl.progress() > 0 || (st && st.isActive);
+        if (revealed) {
+          // Already on screen: the new text simply stays visible
+          gsap.set($('.case-title h2', s.el), { clearProps: 'all' });
+        } else {
+          // Not yet revealed: rebuild the entrance in the new language/direction
+          if (st) st.kill();
+          s.tl.kill();
+          s.tl = buildCaseInternals(s.el);
+        }
       });
       buildDidScrub();
       ScrollTrigger.refresh();
