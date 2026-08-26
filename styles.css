@@ -31,7 +31,7 @@ img{max-width:100%}
 .hero-top{position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:18px 22px;font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:rgba(242,237,228,.5)}
 .hero-top .ar-tag{color:inherit}
 .hero-stage{position:relative;padding-top:84px}
-.hero-ghost{position:absolute;top:38px;right:-6px;font-family:var(--arabic);font-weight:700;font-size:clamp(52px,13vw,84px);line-height:1;white-space:nowrap;color:rgba(231,180,90,.13);-webkit-text-stroke:1.2px rgba(231,180,90,.9)}
+.hero-ghost{position:absolute;top:8px;right:-10px;font-family:var(--arabic);font-weight:700;font-size:clamp(60px,16vw,116px);line-height:1;white-space:nowrap;color:rgba(231,180,90,.11);-webkit-text-stroke:1.2px rgba(231,180,90,.85);pointer-events:none}
 .hero-name{margin:0;font-size:clamp(54px,14vw,92px);line-height:1.04;font-weight:600;letter-spacing:-.02em}
 .clip{display:block;overflow:hidden}
 .clip .line{display:block}
@@ -114,3 +114,80 @@ img{max-width:100%}
 .foot{padding-bottom:28px}
 .foot-inner{padding-top:16px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:baseline;font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;color:rgba(242,237,228,.4)}
 .foot-ar{font-family:var(--arabic);letter-spacing:0;font-size:10.5px}
+
+/* ============================================================
+   Cinematic layer — GSAP + ScrollTrigger + Lenis
+   ============================================================ */
+
+/* Scroll progress bar (GSAP path only) */
+.progress{position:fixed;top:0;left:0;right:0;height:2px;z-index:80;pointer-events:none;display:none}
+.gsap .progress{display:block}
+.progress-fill{display:block;height:100%;background:var(--gold);transform:scaleX(0);transform-origin:0 50%}
+
+/* Film grain (static — zero runtime cost) */
+.grain{position:fixed;inset:0;z-index:70;pointer-events:none;opacity:.055;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.7 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:180px 180px}
+
+/* Hero light beams */
+.hero-fx{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.hero-fx .beam{position:absolute;top:-25%;height:150%;transform:rotate(14deg);background:linear-gradient(115deg,transparent 22%,rgba(231,180,90,.05) 44%,rgba(231,180,90,.1) 50%,rgba(231,180,90,.05) 56%,transparent 78%)}
+.beam.b1{left:-12%;width:55%}
+.beam.b2{left:28%;width:48%}
+.beam.b3{left:62%;width:52%}
+.js:not(.gsap) .hero-fx .beam{opacity:.35}
+.hero>:not(.hero-fx):not(.hero-top){position:relative}
+
+/* Shimmer sweep on the gold lede words */
+.shimmer{position:relative;display:inline-block;overflow:hidden;vertical-align:bottom}
+.shimmer .sheen{position:absolute;inset:0;pointer-events:none;background:linear-gradient(100deg,transparent 25%,rgba(242,237,228,.5) 50%,transparent 75%);transform:translateX(-130%)}
+
+/* Typewriter caret */
+.caret{display:inline-block;width:7px;height:11px;margin-left:3px;background:var(--gold);vertical-align:-1px}
+.hero-meta{min-height:3.6em}
+
+/* 3D room — perspective grid floor behind the case studies.
+   The grid is pre-projected into a flat SVG: no rotateX layer, so it
+   composites as cheap 2D on weak GPUs and stays verifiable in headless. */
+.room-floor{position:fixed;inset:0;pointer-events:none;opacity:0;overflow:hidden}
+.room-grid{position:absolute;left:0;right:0;bottom:-6%;height:52%;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 460' preserveAspectRatio='none'%3E%3Cg stroke='%23F2EDE4' stroke-opacity='0.12' stroke-width='1' fill='none'%3E%3Cline x1='365' y1='0' x2='-150' y2='460'/%3E%3Cline x1='390' y1='0' x2='-30' y2='460'/%3E%3Cline x1='415' y1='0' x2='90' y2='460'/%3E%3Cline x1='440' y1='0' x2='210' y2='460'/%3E%3Cline x1='465' y1='0' x2='330' y2='460'/%3E%3Cline x1='490' y1='0' x2='450' y2='460'/%3E%3Cline x1='514' y1='0' x2='570' y2='460'/%3E%3Cline x1='539' y1='0' x2='690' y2='460'/%3E%3Cline x1='564' y1='0' x2='810' y2='460'/%3E%3Cline x1='589' y1='0' x2='930' y2='460'/%3E%3Cline x1='614' y1='0' x2='1050' y2='460'/%3E%3Cline x1='0' y1='18' x2='1000' y2='18'/%3E%3Cline x1='0' y1='42' x2='1000' y2='42'/%3E%3Cline x1='0' y1='74' x2='1000' y2='74'/%3E%3Cline x1='0' y1='116' x2='1000' y2='116'/%3E%3Cline x1='0' y1='170' x2='1000' y2='170'/%3E%3Cline x1='0' y1='238' x2='1000' y2='238'/%3E%3Cline x1='0' y1='322' x2='1000' y2='322'/%3E%3Cline x1='0' y1='424' x2='1000' y2='424'/%3E%3C/g%3E%3C/svg%3E");background-size:100% 100%;-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 45%);mask-image:linear-gradient(to bottom,transparent 0,#000 45%)}
+.gsap .case{will-change:transform}
+
+/* Marquee band */
+.marquee-band{overflow:hidden;background:var(--gold);color:var(--bg);padding:13px 0;border-top:1px solid rgba(18,16,12,.25);border-bottom:1px solid rgba(18,16,12,.25)}
+.marquee-track{display:flex;align-items:baseline;width:max-content;white-space:nowrap;will-change:transform}
+.mq{font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.18em;padding-right:19px}
+.mq::after{content:'—';margin-left:19px}
+.mq-ar{font-family:var(--arabic);font-size:13.5px;font-weight:700;letter-spacing:0}
+
+/* Contact icon bar */
+.social{align-items:center}
+.icon-link{display:inline-flex;padding:6px;color:rgba(242,237,228,.6);transition:color .18s cubic-bezier(.33,1,.68,1),transform .18s cubic-bezier(.33,1,.68,1)}
+.icon-link svg{width:20px;height:20px;fill:currentColor;display:block}
+.icon-link:hover{color:var(--gold);transform:translateY(-2px)}
+.icon-link:focus-visible{outline:1px solid var(--gold);outline-offset:3px;color:var(--gold)}
+
+/* Also-built cards — reactive dotted texture (Mouse Effect Card) */
+.card{position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;inset:0;pointer-events:none;opacity:.5;background-image:radial-gradient(rgba(242,237,228,.13) 1px,transparent 1.4px);background-size:14px 14px}
+.card>*{position:relative;z-index:1}
+.card .card-fx{position:absolute;z-index:0;left:0;top:0;width:220px;height:220px;border-radius:50%;pointer-events:none;opacity:0;background:radial-gradient(circle,rgba(231,180,90,.15),transparent 65%);will-change:transform}
+
+/* Attract-button particles on contact lanes */
+.lane{position:relative}
+.lane .pt{position:absolute;left:50%;top:50%;width:3px;height:3px;border-radius:50%;background:var(--gold);opacity:0;pointer-events:none;will-change:transform}
+
+/* Micro-interaction timing (150–250ms, ease-out) */
+.btn,.lane{transition:background-color .18s cubic-bezier(.33,1,.68,1),color .18s cubic-bezier(.33,1,.68,1),border-color .18s cubic-bezier(.33,1,.68,1)}
+.ulink{transition:color .18s cubic-bezier(.33,1,.68,1)}
+
+/* GSAP owns motion when active — silence the CSS fallbacks */
+.gsap .hero-ghost,.gsap .line-1,.gsap .line-2,.gsap .hero-lede,.gsap .hero-meta,.gsap .hero-scroll{animation:none}
+.gsap [data-reveal]{transition:none}
+
+/* Reduced motion: fades only, no flights */
+@media (prefers-reduced-motion:reduce){
+  .icon-link,.btn,.lane{transition:color .18s ease-out,background-color .18s ease-out,border-color .18s ease-out}
+  .icon-link:hover{transform:none}
+  .room-floor{display:none}
+  .marquee-track{transform:none !important}
+  .shimmer .sheen,.caret{display:none}
+}
