@@ -5,9 +5,8 @@
   // The .js class arms the [data-reveal] hiding CSS; it must be added by the same
   // script that reveals, so a failed load can never strand content hidden.
   doc.classList.add('js');
-  // The intro (chooser, wipe, hero entrance) is choreographed from the top of the
-  // page, so reloads must not restore a deep scroll position.
-  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  // scrollRestoration is handled by the guarded inline script in <head>, so it only
+  // affects the first visit and returning readers keep their place on reload.
 
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
@@ -858,10 +857,15 @@
     doc.classList.add('lock');
     // A reload can restore a deep scroll position (and some browsers do it after
     // this script runs), so pin the page to the top until the intro is done.
+    // Only pins while the intro owns the page — a late `load` (slow fonts/CDN) must
+    // never yank a reader who has already started scrolling.
+    let introRunning = true;
     const pinTop = () => {
+      if (!introRunning) return;
       window.scrollTo(0, 0);
       if (lenis) lenis.scrollTo(0, { immediate: true, force: true });
     };
+    const releaseIntro = () => { introRunning = false; window.removeEventListener('load', pinTop); };
     pinTop();
     requestAnimationFrame(pinTop);
     window.addEventListener('load', pinTop);
@@ -887,6 +891,7 @@
             gsap.set(welcome, { backgroundColor: 'transparent' });
             gsap.set(wipe, { transformOrigin: choice === 'ar' ? '0% 50%' : '100% 50%' });
             doc.classList.remove('lock');
+            releaseIntro();
             if (lenis) lenis.start();
             startBelowFold();
           })

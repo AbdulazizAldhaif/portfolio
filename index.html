@@ -10,8 +10,9 @@
 <link rel="preload" href="assets/fonts/ibmplexmono-400-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/ibmplexsansarabic-700-arabic.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/ibmplexsansarabic-400-arabic.woff2" as="font" type="font/woff2" crossorigin>
-<script>/* must run before the browser restores a scroll position: the intro plays from the top */
-try{history.scrollRestoration='manual'}catch(e){}</script>
+<script>/* First visit only: the intro plays from the top, so the browser must not restore a
+   scroll position. Returning visitors keep normal restoration. */
+try{if(!localStorage.getItem('siteLang.v2'))history.scrollRestoration='manual'}catch(e){}</script>
 <link rel="stylesheet" href="styles.css">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
@@ -108,7 +109,7 @@ try{history.scrollRestoration='manual'}catch(e){}</script>
       <span class="ar-tag" lang="ar" dir="rtl">دراسة حالة</span>
     </div>
     <div class="case-title" data-reveal="60">
-      <span class="case-logo" aria-hidden="true"><img src="assets/logos/eidaah.png" alt="" onerror="this.remove()"><span lang="ar">إ</span></span>
+      <span class="case-logo" aria-hidden="true"><img src="assets/logos/eidaah.png" alt="" onerror="this.parentElement.remove()"></span>
       <h2>Eidaah</h2>
       <span class="case-ar" lang="ar" dir="rtl">إيضاح</span>
     </div>
@@ -146,7 +147,7 @@ try{history.scrollRestoration='manual'}catch(e){}</script>
       <span class="ar-tag" lang="ar" dir="rtl">دراسة حالة</span>
     </div>
     <div class="case-title" data-reveal="60">
-      <span class="case-logo" aria-hidden="true"><img src="assets/logos/sahiifh.png" alt="" onerror="this.remove()"><span lang="ar">ص</span></span>
+      <span class="case-logo" aria-hidden="true"><img src="assets/logos/sahiifh.png" alt="" onerror="this.parentElement.remove()"></span>
       <h2>Sahifat Itma'inn</h2>
       <span class="case-ar" lang="ar" dir="rtl">صحيفة اطمئن</span>
     </div>
@@ -184,7 +185,7 @@ try{history.scrollRestoration='manual'}catch(e){}</script>
       <span class="ar-tag" lang="ar" dir="rtl">دراسة حالة</span>
     </div>
     <div class="case-title" data-reveal="60">
-      <span class="case-logo" aria-hidden="true"><img src="assets/logos/masari.png" alt="" onerror="this.remove()"><span lang="ar">م</span></span>
+      <span class="case-logo" aria-hidden="true"><img src="assets/logos/masari.png" alt="" onerror="this.parentElement.remove()"></span>
       <h2>Masari</h2>
       <span class="case-ar" lang="ar" dir="rtl">مساري</span>
     </div>

@@ -105,11 +105,13 @@ img{max-width:100%}
 .section{padding-top:38px;border-top:1px solid var(--line)}
 .also{padding-bottom:46px}
 .strip{margin-top:20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
-.card{background:var(--bg);padding:18px 16px}
+/* Column layout + auto margin pins every card's links to one shared baseline,
+   so uneven descriptions no longer leave a framed void under the short cards */
+.card{background:var(--bg);padding:18px 16px;display:flex;flex-direction:column}
 .card-title{margin:0;font-size:16px;font-weight:600}
 .card-ar{font-family:var(--arabic);font-weight:700;font-size:14px;color:var(--gold)}
 .card-desc{margin:8px 0 0;font-size:12.5px;line-height:1.55;color:rgba(242,237,228,.6)}
-.card-links{margin-top:12px;display:flex;gap:16px}
+.card-links{margin-top:auto;padding-top:14px;display:flex;gap:16px}
 .ulink{font-family:var(--mono);font-size:11px;color:rgba(242,237,228,.6);text-decoration:underline;text-underline-offset:4px;text-decoration-color:rgba(242,237,228,.25)}
 .ulink:hover{color:var(--gold)}
 
@@ -128,7 +130,7 @@ img{max-width:100%}
 .lane-btn svg{width:17px;height:17px;fill:currentColor;display:block}
 .lane-btn:hover{background:var(--gold);color:var(--bg);border-color:var(--gold)}
 .lane-btn:focus-visible{outline:1px solid var(--gold);outline-offset:2px}
-.social{margin-top:18px;display:flex;gap:22px}
+.social{margin-top:18px;display:flex;gap:10px;flex-wrap:wrap}
 .contact-lines{margin-top:14px;display:flex;flex-direction:column;gap:8px;align-items:flex-start}
 
 /* ---------- Footer ---------- */
@@ -180,12 +182,13 @@ html.ar .progress-fill{transform-origin:100% 50%}
 .mq-sep{font-family:var(--mono);font-size:12px;padding:0 24px;opacity:.7}
 .mq-ar{font-family:var(--arabic);font-size:13.5px;font-weight:700;letter-spacing:0}
 
-/* Contact icon bar */
+/* Contact icons — bordered targets so they read as buttons, not decoration
+   (as bare 20px glyphs at 60% opacity they were being missed entirely) */
 .social{align-items:center}
-.icon-link{display:inline-flex;padding:6px;color:rgba(242,237,228,.6);transition:color .18s cubic-bezier(.33,1,.68,1),transform .18s cubic-bezier(.33,1,.68,1)}
-.icon-link svg{width:20px;height:20px;fill:currentColor;display:block}
-.icon-link:hover{color:var(--gold);transform:translateY(-2px)}
-.icon-link:focus-visible{outline:1px solid var(--gold);outline-offset:3px;color:var(--gold)}
+.icon-link{width:46px;height:46px;display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(231,180,90,.45);color:var(--gold);transition:background-color .18s cubic-bezier(.33,1,.68,1),color .18s cubic-bezier(.33,1,.68,1),border-color .18s cubic-bezier(.33,1,.68,1)}
+.icon-link svg{width:21px;height:21px;fill:currentColor;display:block}
+.icon-link:hover{background:var(--gold);color:var(--bg);border-color:var(--gold)}
+.icon-link:focus-visible{outline:1px solid var(--gold);outline-offset:3px}
 
 /* Also-built cards — reactive dotted texture (Mouse Effect Card) */
 .card{position:relative;overflow:hidden}
@@ -283,7 +286,9 @@ html.ar .tour-text{line-height:1.75}
 
 /* Desktop — use the whole screen */
 @media (min-width:1024px){
-  .col{max-width:1240px;padding:0 6vw}
+  /* padding-inline, not the shorthand: the shorthand silently zeroed the authored
+     bottom padding on .also/.contact/.foot, welding the cards to the marquee */
+  .col{max-width:1240px;padding-inline:6vw}
   /* Rows: statement, meta, then a flexible row that pins the scroll cue to the
      floor — so the frame reads as a diagonal, not a bottom-heavy strip. */
   .hero{max-width:none;padding:19vh 6vw 7vh;display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);grid-template-rows:auto auto 1fr;column-gap:5vw}
@@ -299,8 +304,12 @@ html.ar .tour-text{line-height:1.75}
   .hero-meta{grid-column:2;grid-row:2;align-self:start;margin-top:20px;font-size:11.5px}
   .hero-scroll{grid-column:2;grid-row:3;align-self:end;margin-top:30px}
   .case{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);column-gap:72px;padding:72px 0 96px}
-  .case-side,.case-main{display:block}
-  .case-side{position:sticky;top:12vh;align-self:start}
+  .case-main{display:block}
+  /* Not sticky: each case fits one screen, so the sticky pinned for only ~150-240px
+     and left a void that tall under the column. Stretching instead and dropping the
+     stack/CTA to the floor lands them on the stats baseline with no dead rectangle. */
+  .case-side{display:flex;flex-direction:column;align-self:stretch}
+  .case-side .stack{margin-top:auto}
   .case-num{font-size:clamp(200px,22vw,300px);top:-30px;right:-2vw}
   html.ar .case-num{right:auto;left:-2vw}
   .case-title h2{font-size:clamp(40px,3.6vw,56px)}
@@ -329,12 +338,14 @@ html.ar .tour-text{line-height:1.75}
   html.ar .qn{flex-direction:row}
 }
 
-/* Monogram / logo tiles (drop a file into assets/logos/ to replace the initial) */
-.case-logo{width:32px;height:32px;flex:none;align-self:center;position:relative;display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(231,180,90,.4);background:rgba(231,180,90,.06);overflow:hidden}
-.case-logo span{font-family:var(--arabic);font-weight:700;font-size:15px;color:var(--gold);line-height:1}
-.case-logo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1}
-.case-logo--sm{width:22px;height:22px;margin-inline-end:8px;vertical-align:-6px}
-.case-logo--sm span{font-size:11px}
+/* Project logos: height-driven so wordmarks and icon marks both sit on one baseline;
+   `contain` shows the whole mark (cover used to crop it out of its own box). */
+.case-logo{height:44px;min-width:44px;flex:none;align-self:center;display:inline-flex;align-items:center;justify-content:center;padding:0 10px;border:1px solid rgba(231,180,90,.4);background:rgba(231,180,90,.06);overflow:hidden}
+.case-logo span{font-family:var(--arabic);font-weight:700;font-size:19px;color:var(--gold);line-height:1}
+.case-logo img{height:30px;width:auto;max-width:150px;object-fit:contain;display:block}
+.case-logo--sm{height:26px;min-width:26px;padding:0 6px;margin-inline-end:8px;vertical-align:-7px}
+.case-logo--sm span{font-size:13px}
+.case-logo--sm img{height:17px;max-width:80px}
 
 /* Giant section numerals */
 .case{position:relative}
