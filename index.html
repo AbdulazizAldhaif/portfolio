@@ -34,6 +34,27 @@
   <a class="cv-btn" href="assets/cv/Abdulaziz-Aldhaif-CV-EN.pdf" target="_blank" rel="noreferrer" data-cv-en="assets/cv/Abdulaziz-Aldhaif-CV-EN.pdf" data-cv-ar="assets/cv/Abdulaziz-Aldhaif-CV-AR.pdf"><span class="i18n-cv">CV</span> ↗</a>
 </div>
 
+<nav class="quicknav" aria-label="Sections">
+  <a class="qn" href="#work"><span class="qn-dot" aria-hidden="true"></span><span class="qn-label i18n-qn-work">Work</span></a>
+  <a class="qn" href="#built"><span class="qn-dot" aria-hidden="true"></span><span class="qn-label i18n-qn-built">Built</span></a>
+  <a class="qn" href="#contact"><span class="qn-dot" aria-hidden="true"></span><span class="qn-label i18n-qn-contact">Contact</span></a>
+  <button type="button" class="qn qn-tour"><span class="qn-dot" aria-hidden="true"></span><span class="qn-label i18n-qn-tour">Tour</span></button>
+</nav>
+
+<div class="tour" hidden>
+  <div class="tour-dim" aria-hidden="true"></div>
+  <div class="tour-ring" aria-hidden="true"></div>
+  <div class="tour-card" role="dialog" aria-live="polite">
+    <p class="tour-step"></p>
+    <h3 class="tour-title"></h3>
+    <p class="tour-text"></p>
+    <div class="tour-actions">
+      <button type="button" class="tour-skip"></button>
+      <button type="button" class="tour-next"></button>
+    </div>
+  </div>
+</div>
+
 <div class="welcome" role="dialog" aria-modal="true" aria-label="Choose your language · اختر لغتك" hidden>
   <div class="welcome-inner">
     <p class="welcome-kicker"><span lang="en">CHOOSE YOUR LANGUAGE</span><span class="welcome-dot" aria-hidden="true">·</span><span lang="ar" dir="rtl">اختر لغتك</span></p>
@@ -66,12 +87,16 @@
     <svg class="hint-hand" viewBox="0 0 32 40" width="62" height="78" fill="none" stroke="#E7B45A" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V7a2.5 2.5 0 0 1 5 0v10"/><path d="M17 15.5a2.5 2.5 0 0 1 5 0V19a2.4 2.4 0 0 1 4.6 1l-1.4 8.2A8 8 0 0 1 17.3 35h-1.6a8 8 0 0 1-6.5-3.3l-4.6-6.4a2.3 2.3 0 0 1 3.5-2.9l2.9 2.9"/></svg>
     <svg class="hint-arrow" viewBox="0 0 16 40" width="16" height="40" fill="none" stroke="#E7B45A" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v34"/><path d="M2 30l6 7 6-7"/></svg>
     <span class="hint-label i18n-hint">Scroll to explore</span>
+    <div class="hint-actions">
+      <button type="button" class="tour-skip hint-skip i18n-hint-skip">Skip tour</button>
+      <button type="button" class="tour-next hint-next i18n-hint-next">Next</button>
+    </div>
   </div>
 </div>
 
 <main>
 <div class="room-floor" aria-hidden="true"><div class="room-grid"></div></div>
-<section class="col cases" aria-label="Selected work">
+<section class="col cases" id="work" aria-label="Selected work">
 
   <article class="case">
     <span class="case-num" aria-hidden="true">01</span>
@@ -188,7 +213,7 @@
 
 </section>
 
-<section class="col also" aria-label="Also built">
+<section class="col also" id="built" aria-label="Also built">
   <div class="section">
     <div class="case-top" data-reveal="0">
       <h2 class="kicker gold">ALSO BUILT</h2>
@@ -220,7 +245,7 @@
   </div>
 </section>
 
-<section class="col contact" aria-label="Contact">
+<section class="col contact" id="contact" aria-label="Contact">
   <div class="section">
     <div class="case-top" data-reveal="0">
       <span class="kicker gold">CONTACT</span>
@@ -284,6 +309,7 @@
 <footer class="col foot">
   <div class="foot-inner">
     <span>© 2026 ABDULAZIZ ALDHAIF</span>
+    <button type="button" class="ulink replay-intro i18n-replay">Replay intro</button>
     <span class="foot-ar" lang="ar" dir="rtl">عبدالعزيز الضيف</span>
   </div>
 </footer>

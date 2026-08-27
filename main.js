@@ -28,7 +28,7 @@
   };
   // Accessible names in Arabic mode (keyed by the English aria-label in the HTML)
   const ARIA_AR = {
-    'Selected work': 'أعمال مختارة', 'Also built': 'أعمال أخرى', 'Contact': 'تواصل', 'Language': 'اللغة',
+    'Selected work': 'أعمال مختارة', 'Also built': 'أعمال أخرى', 'Contact': 'تواصل', 'Language': 'اللغة', 'Sections': 'الأقسام',
     'WhatsApp': 'واتساب', 'LinkedIn': 'لينكدإن', 'GitHub': 'جيت هب', 'Email': 'البريد الإلكتروني',
     'WhatsApp — hiring': 'واتساب — توظيف', 'Email — hiring': 'بريد — توظيف',
     'WhatsApp — coop / training': 'واتساب — تدريب تعاوني', 'Email — coop / training': 'بريد — تدريب تعاوني',
@@ -70,6 +70,13 @@
     cv: { en: 'CV', ar: 'السيرة' },
     cvline: { en: 'View CV (PDF)', ar: 'عرض السيرة الذاتية (PDF)' },
     hint: { en: 'Scroll to explore', ar: 'مرر للاستكشاف' },
+    hintSkip: { en: 'Skip tour', ar: 'تخطي الجولة' },
+    hintNext: { en: 'Next', ar: 'التالي' },
+    qnWork: { en: 'Work', ar: 'أعمالي' },
+    qnBuilt: { en: 'Built', ar: 'أخرى' },
+    qnContact: { en: 'Contact', ar: 'تواصل' },
+    qnTour: { en: 'Tour', ar: 'جولة' },
+    replay: { en: 'Replay intro', ar: 'إعادة المقدمة' },
     name1: { en: 'Abdulaziz', ar: 'عبدالعزيز' },
     name2: { en: 'Aldhaif', ar: 'الضيف' },
     ghost: { en: 'عبدالعزيز الضيف', ar: 'Abdulaziz Aldhaif' },
@@ -95,17 +102,36 @@
     collab: { en: 'COLLABORATION', ar: 'تعاون' }
   };
 
-  let lang = 'en', storedLang = null;
-  try { storedLang = localStorage.getItem('lang'); } catch (e) { /* private mode */ }
+  // Storage keys are versioned: bumping them re-runs the chooser + tour for everyone
+  const LANG_KEY = 'siteLang.v2', TOUR_KEY = 'tourSeen.v2';
+  let lang = 'en', storedLang = null, tourSeen = false;
+  try { storedLang = localStorage.getItem(LANG_KEY); tourSeen = localStorage.getItem(TOUR_KEY) === '1'; } catch (e) { /* private mode */ }
   if (storedLang === 'ar') lang = 'ar';
   const firstVisit = storedLang !== 'en' && storedLang !== 'ar';
+  const markTourSeen = () => { try { localStorage.setItem(TOUR_KEY, '1'); } catch (e) { /* private mode */ } };
+
+  // Guided tour copy (step 0 is the scroll demo card itself)
+  const TOUR = {
+    en: { skip: 'Skip tour', next: 'Next', done: 'Back to top', of: 'of', steps: [
+      { sel: '.lang-pill', t: 'English or Arabic — anytime', d: 'Switch language here. Everything changes, even the pre-written WhatsApp and email messages.' },
+      { sel: '.cv-btn', t: 'My CV', d: 'Opens as a PDF, in the language you’re reading.' },
+      { sel: '.quicknav', t: 'Jump anywhere', d: 'Work, other projects, contact — one tap. Replay this tour from here too.' },
+      { sel: '.lanes', t: 'Pick a topic, then a channel', d: 'Hiring, coop or collaboration — WhatsApp or email, with the message already written for you.', scroll: true }
+    ] },
+    ar: { skip: 'تخطي الجولة', next: 'التالي', done: 'العودة للأعلى', of: 'من', steps: [
+      { sel: '.lang-pill', t: 'عربي أو English — في أي وقت', d: 'بدّل اللغة من هنا. كل شيء يتغير، حتى رسائل واتساب والبريد الجاهزة.' },
+      { sel: '.cv-btn', t: 'سيرتي الذاتية', d: 'تُفتح بصيغة PDF باللغة التي تقرأ بها.' },
+      { sel: '.quicknav', t: 'انتقل إلى أي قسم', d: 'أعمالي، مشاريع أخرى، تواصل — بنقرة واحدة. ويمكنك إعادة هذه الجولة من هنا.' },
+      { sel: '.lanes', t: 'اختر الموضوع ثم القناة', d: 'توظيف أو تدريب أو تعاون — واتساب أو بريد، والرسالة جاهزة لك.', scroll: true }
+    ] }
+  };
 
   function applyLang(next) {
     lang = next;
     doc.lang = next;
     doc.dir = next === 'ar' ? 'rtl' : 'ltr';
     doc.classList.toggle('ar', next === 'ar');
-    try { localStorage.setItem('lang', next); } catch (e) { /* private mode */ }
+    try { localStorage.setItem(LANG_KEY, next); } catch (e) { /* private mode */ }
 
     const setText = (sel, val) => $$(sel).forEach((el) => { el.textContent = val; });
     // Accent elements hold the *other* language: flip their lang/dir with the text
@@ -116,6 +142,13 @@
     setText('.i18n-cv', T.cv[next]);
     setText('.i18n-cvline', T.cvline[next]);
     setText('.i18n-hint', T.hint[next]);
+    setText('.i18n-hint-skip', T.hintSkip[next]);
+    setText('.i18n-hint-next', T.hintNext[next]);
+    setText('.i18n-qn-work', T.qnWork[next]);
+    setText('.i18n-qn-built', T.qnBuilt[next]);
+    setText('.i18n-qn-contact', T.qnContact[next]);
+    setText('.i18n-qn-tour', T.qnTour[next]);
+    setText('.i18n-replay', T.replay[next]);
     $('.line-1').textContent = T.name1[next];
     $('.line-2').textContent = T.name2[next];
     const ghost = $('.hero-ghost');
@@ -241,6 +274,10 @@
   const bindLang = (handler) => $$('.lang-opt').forEach((b) => {
     b.addEventListener('click', () => { if (b.dataset.lang !== lang) handler(b.dataset.lang); });
   });
+  $$('.replay-intro').forEach((b) => b.addEventListener('click', () => {
+    try { localStorage.removeItem(LANG_KEY); localStorage.removeItem(TOUR_KEY); } catch (e) { /* private mode */ }
+    location.reload();
+  }));
 
   if (reduceMotion || !window.gsap || !window.ScrollTrigger) {
     fallback();
@@ -257,6 +294,10 @@
      ================================================================ */
   doc.classList.add('gsap');
   gsap.registerPlugin(ScrollTrigger);
+  // Mobile browsers resize the viewport as the URL bar shows/hides; refreshing on
+  // every such resize left scrubbed hero tweens frozen mid-state at the top.
+  ScrollTrigger.config({ ignoreMobileResize: true });
+  window.addEventListener('scrollend', () => ScrollTrigger.update(), { passive: true });
   // No global overwrite: the hero exit scrub and the entrance timeline touch the
   // same properties, and an auto-overwrite would kill the entrance on early scroll.
   gsap.defaults({ ease: 'power2.out', duration: 0.6 });
@@ -331,6 +372,93 @@
   }
   heroTl.add(runTypewriter, 1.3);
 
+  /* ---------- Guided tour: ring + card on each control, ends at the contact lanes ---------- */
+  let tourActive = false, tourPending = false;
+  const nav = $('.quicknav');
+  function runTour(fromStep) {
+    const tour = $('.tour');
+    if (!tour || tourActive) return;
+    tourActive = true;
+    const L = TOUR[lang], steps = L.steps;
+    const ring = $('.tour-ring', tour), card = $('.tour-card', tour);
+    const skipBtn = $('.tour-skip', tour), nextBtn = $('.tour-next', tour);
+    let i = fromStep;
+    skipBtn.textContent = L.skip;
+    const end = (backToTop) => {
+      tourActive = false;
+      markTourSeen();
+      if (nav) nav.classList.remove('force');
+      document.removeEventListener('keydown', onKey);
+      gsap.to(tour, { autoAlpha: 0, duration: 0.25, onComplete: () => { tour.hidden = true; gsap.set([tour, ring, card], { clearProps: 'opacity,visibility' }); } });
+      if (backToTop) { if (lenis) lenis.scrollTo(0, { duration: 0.9 }); else window.scrollTo({ top: 0, behavior: 'smooth' }); }
+      syncNav();
+    };
+    const onKey = (e) => { if (e.key === 'Escape') end(false); };
+    document.addEventListener('keydown', onKey);
+    const place = (target) => {
+      const r = target.getBoundingClientRect(), pad = 6;
+      gsap.set(ring, { left: r.left - pad, top: r.top - pad, width: r.width + pad * 2, height: r.height + pad * 2 });
+      const cw = Math.min(320, window.innerWidth - 32);
+      gsap.set(card, { width: cw });
+      const ch = card.offsetHeight || 170;
+      let top = r.bottom + 16;
+      if (top + ch > window.innerHeight - 16) top = Math.max(16, r.top - ch - 16);
+      const left = Math.min(Math.max(16, r.left + r.width / 2 - cw / 2), window.innerWidth - cw - 16);
+      gsap.set(card, { left, top });
+    };
+    const show = (n) => {
+      i = n;
+      const s = steps[n], target = $(s.sel);
+      $('.tour-step', tour).textContent = (n + 1) + ' ' + L.of + ' ' + steps.length;
+      $('.tour-title', tour).textContent = s.t;
+      $('.tour-text', tour).textContent = s.d;
+      nextBtn.textContent = n === steps.length - 1 ? L.done : L.next;
+      if (nav) nav.classList.toggle('force', s.sel === '.quicknav');
+      const reveal = () => requestAnimationFrame(() => {
+        place(target);
+        gsap.fromTo([ring, card], { autoAlpha: 0, y: 8 }, { autoAlpha: 1, y: 0, duration: 0.35, ease: 'power3.out', stagger: 0.05 });
+        nextBtn.focus({ preventScroll: true });
+      });
+      gsap.to([ring, card], { autoAlpha: 0, duration: 0.15 });
+      if (s.scroll) {
+        const y = target.getBoundingClientRect().top + window.scrollY - window.innerHeight * 0.3;
+        if (lenis) lenis.scrollTo(y, { duration: 0.9, onComplete: reveal });
+        else { window.scrollTo({ top: y, behavior: 'smooth' }); setTimeout(reveal, 900); }
+      } else {
+        gsap.delayedCall(0.16, reveal);
+      }
+    };
+    tour.hidden = false;
+    gsap.fromTo(tour, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.3 });
+    nextBtn.onclick = () => (i < steps.length - 1 ? show(i + 1) : end(true));
+    skipBtn.onclick = () => end(false);
+    show(fromStep);
+  }
+
+  /* ---------- Quick nav: appears after the hero, tracks the active section ---------- */
+  let navOn = false;
+  function syncNav() {
+    if (!nav) return;
+    const vis = navOn && !tourActive;
+    nav.classList.toggle('on', vis);
+    gsap.to(nav, { autoAlpha: vis ? 1 : 0, duration: 0.25, overwrite: 'auto' });
+  }
+  if (nav) {
+    ScrollTrigger.create({ start: () => window.innerHeight * 0.6, end: 'max', onToggle: (s) => { navOn = s.isActive; syncNav(); } });
+    $$('a.qn', nav).forEach((a) => {
+      const target = $(a.getAttribute('href'));
+      if (!target) return;
+      ScrollTrigger.create({ trigger: target, start: 'top 50%', end: 'bottom 50%', onToggle: (s) => a.classList.toggle('active', s.isActive) });
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (lenis) lenis.scrollTo(target, { offset: -8, duration: 1.1 });
+        else target.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+    const tourBtn = $('.qn-tour', nav);
+    if (tourBtn) tourBtn.addEventListener('click', () => runTour(0));
+  }
+
   /* ---------- Scroll gesture demo: centred, after the hero settles, gone on first scroll ---------- */
   let userScrolled = false;
   window.addEventListener('scroll', () => { userScrolled = true; }, { once: true, passive: true });
@@ -339,6 +467,8 @@
     if (!hint || userScrolled || window.scrollY > 4) return;
     const touch = window.matchMedia('(pointer: coarse)').matches;
     hint.classList.add(touch ? 'hand' : 'mouse');
+    const inTour = tourPending;
+    if (inTour) hint.classList.add('in-tour');
     const loop = gsap.timeline({ repeat: -1, repeatDelay: 0.35 });
     if (touch) {
       loop.fromTo('.hint-hand', { y: 26, opacity: 0.35 }, { y: -22, opacity: 1, duration: 0.85, ease: 'power2.out' })
@@ -349,14 +479,25 @@
     loop.fromTo('.hint-arrow', { y: -4, opacity: 0.5 }, { y: 6, opacity: 1, duration: 0.9, ease: 'power2.inOut', yoyo: true, repeat: 1 }, 0);
     gsap.fromTo(hint, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.6 });
     gsap.fromTo('.hint-card', { scale: 0.92 }, { scale: 1, duration: 0.6, ease: 'power3.out' });
-    const dismiss = () => {
+    let done = false;
+    const dismiss = (advance) => {
+      if (done) return;
+      done = true;
       loop.kill();
       gsap.to(hint, { autoAlpha: 0, duration: 0.3, onComplete: () => hint.remove() });
-      window.removeEventListener('scroll', dismiss);
-      if (lenis) lenis.off('scroll', dismiss);
+      window.removeEventListener('scroll', onScroll);
+      if (lenis) lenis.off('scroll', onScroll);
+      if (inTour) {
+        tourPending = false;
+        if (advance) runTour(0); else markTourSeen();
+      }
     };
-    window.addEventListener('scroll', dismiss, { passive: true });
-    if (lenis) lenis.on('scroll', dismiss);
+    const onScroll = () => dismiss(true);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    if (lenis) lenis.on('scroll', onScroll);
+    const nextBtn = $('.hint-next', hint), skipBtn = $('.hint-skip', hint);
+    if (nextBtn) nextBtn.addEventListener('click', () => dismiss(true));
+    if (skipBtn) skipBtn.addEventListener('click', () => dismiss(false));
   }
   heroTl.eventCallback('onComplete', () => gsap.delayedCall(0.4, showScrollHint));
 
@@ -376,10 +517,15 @@
   const finishHero = () => {
     if (heroTl.progress() < 1) { skipTextFx = true; heroTl.progress(1); skipTextFx = false; }
   };
-  gsap.timeline({
-    scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom 25%', scrub: true, onEnter: finishHero },
+  const heroExit = gsap.timeline({
+    scrollTrigger: {
+      trigger: '.hero', start: 'top top', end: 'bottom 25%', scrub: true, onEnter: finishHero,
+      // Hard reset when the user is back at the top, whatever the scroll math thinks
+      onLeaveBack: () => { heroExit.progress(0); gsap.set('.progress-fill', { scaleX: 0 }); }
+    },
     defaults: { ease: 'none', immediateRender: false }
-  })
+  });
+  heroExit
     .fromTo('.hero-ghost', { yPercent: 0, scale: 1, autoAlpha: 1 }, { yPercent: 30, scale: 1.22, autoAlpha: 0.25 }, 0)
     .fromTo('.hero-name', { yPercent: 0 }, { yPercent: -12 }, 0)
     .fromTo(['.hero-lede', '.hero-meta', '.hero-scroll'], { yPercent: 0, autoAlpha: 1 }, { yPercent: -18, autoAlpha: 0.35 }, 0)
@@ -718,6 +864,7 @@
           .to(wipe, { scaleX: 1, duration: 0.55, ease: 'power3.inOut' }, 0.15)
           .add(() => {
             applyLang(choice); // swap everything while the page is fully covered
+            tourPending = !tourSeen; // the scroll demo becomes step 0 of the tour
             gsap.set(inner, { autoAlpha: 0 });
             gsap.set(welcome, { backgroundColor: 'transparent' });
             gsap.set(wipe, { transformOrigin: choice === 'ar' ? '0% 50%' : '100% 50%' });
