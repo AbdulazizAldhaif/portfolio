@@ -174,8 +174,8 @@ html.ar .progress-fill{transform-origin:100% 50%}
 /* Marquee band */
 .marquee-band{overflow:hidden;background:var(--gold);color:var(--bg);padding:13px 0;border-top:1px solid rgba(18,16,12,.25);border-bottom:1px solid rgba(18,16,12,.25)}
 .marquee-track{display:flex;align-items:baseline;width:max-content;white-space:nowrap;will-change:transform}
-.mq{font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.18em;padding-right:19px}
-.mq::after{content:'—';margin-left:19px}
+.mq{font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.18em}
+.mq-sep{font-family:var(--mono);font-size:12px;padding:0 24px;opacity:.7}
 .mq-ar{font-family:var(--arabic);font-size:13.5px;font-weight:700;letter-spacing:0}
 
 /* Contact icon bar */

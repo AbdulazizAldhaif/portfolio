@@ -94,7 +94,7 @@
     sar: { en: 'Responsive front end simulating the Saudi Railways portal, framework-free.', ar: 'واجهة أمامية متجاوبة تحاكي بوابة الخطوط الحديدية السعودية، بدون أطر عمل.' },
     athar: { en: 'Arabic-first e-commerce storefront for a Saudi oud & perfume brand: filterable catalogue, guest cart and checkout with shipping rules, order tracking by order number + phone, and customer reviews. Payments simulated by design (course project). Next.js, Tailwind, Supabase with row-level security.', ar: 'متجر إلكتروني يضع العربية أولًا لعلامة سعودية للعود والعطور: كتالوج قابل للتصفية، وسلة وإتمام شراء كضيف مع قواعد شحن، وتتبع الطلب برقم الطلب والجوال، وتقييمات العملاء. الدفع محاكاة مقصودة (مشروع مقرر دراسي). Next.js وTailwind وSupabase مع أمان على مستوى الصفوف.' },
     contactK: { en: 'CONTACT', ar: 'تواصل' },
-    contactTag: { en: 'تواصل معي', ar: 'CONTACT' },
+    contactTag: { en: 'تحدث معي', ar: 'CONTACT' },
     talk: { en: 'Talk to me', ar: 'تحدث معي' },
     sub: { en: 'Fastest reply on WhatsApp — pick a lane.', ar: 'أسرع رد عبر واتساب — اختر مسارك.' },
     hiring: { en: 'HIRING', ar: 'توظيف' },
