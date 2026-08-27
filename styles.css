@@ -41,7 +41,8 @@ img{max-width:100%}
 .hero-top{position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:18px 22px;font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:rgba(242,237,228,.5)}
 .hero-top .ar-tag{color:inherit}
 .hero-stage{position:relative;padding-top:84px}
-.hero-ghost{position:absolute;top:8px;right:-10px;font-family:var(--arabic);font-weight:700;font-size:clamp(60px,16vw,116px);line-height:1;white-space:nowrap;color:rgba(231,180,90,.11);-webkit-text-stroke:1.2px rgba(231,180,90,.85);pointer-events:none}
+/* 13vw keeps the full name inside the viewport at every width (it is ~6.7× its font-size wide) */
+.hero-ghost{position:absolute;top:8px;right:-10px;font-family:var(--arabic);font-weight:700;font-size:clamp(44px,13vw,116px);line-height:1;white-space:nowrap;color:rgba(231,180,90,.11);-webkit-text-stroke:1.2px rgba(231,180,90,.85);pointer-events:none}
 .hero-name{margin:0;font-size:clamp(54px,14vw,92px);line-height:1.04;font-weight:600;letter-spacing:-.02em}
 .clip{display:block;overflow:hidden}
 .clip .line{display:block}
@@ -113,7 +114,7 @@ img{max-width:100%}
 .contact{padding-bottom:40px}
 .contact-head{margin-top:22px;display:flex;align-items:center;gap:18px}
 .portrait{width:84px;height:84px;flex:none;position:relative}
-.portrait img{width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(1) sepia(.32) saturate(1.4) hue-rotate(-12deg) brightness(.92) contrast(1.05);-webkit-mask-image:radial-gradient(110% 110% at 50% 42%,#000 52%,transparent 98%);mask-image:radial-gradient(110% 110% at 50% 42%,#000 52%,transparent 98%)}
+.portrait img{width:100%;height:100%;object-fit:cover;display:block;-webkit-mask-image:radial-gradient(110% 110% at 50% 42%,#000 52%,transparent 98%);mask-image:radial-gradient(110% 110% at 50% 42%,#000 52%,transparent 98%)}
 .contact-title{margin:0;font-size:clamp(30px,8vw,38px);font-weight:600;letter-spacing:-.01em;line-height:1.05}
 .contact-sub{margin:8px 0 0;font-size:13px;line-height:1.5;color:rgba(242,237,228,.6)}
 .lanes{margin-top:24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
@@ -232,7 +233,8 @@ html.ar .case-num{right:auto;left:-10px}
 /* Arabic mode typography — Arabic script never letter-spaces (it breaks joining) */
 html.ar body{font-family:var(--arabic)}
 html.ar .hero-name{font-family:var(--arabic);font-size:clamp(46px,12vw,80px);line-height:1.2;letter-spacing:0}
-html.ar .hero-ghost{font-family:var(--sans);font-weight:700;letter-spacing:-.02em;font-size:clamp(40px,10vw,74px);right:auto;left:-8px}
+/* Latin ghost wraps to two stacked lines: never wider than the column, mirrors the EN layout */
+html.ar .hero-ghost{font-family:var(--sans);font-weight:700;letter-spacing:-.02em;font-size:clamp(40px,12vw,84px);line-height:.95;right:auto;left:0;top:-4px;white-space:normal;width:100%;text-align:left}
 html.ar .hero-meta{font-family:var(--arabic);letter-spacing:0;font-size:12.5px;line-height:1.9}
 html.ar .i18n-scroll{font-family:var(--arabic);letter-spacing:0;font-size:11px}
 html.ar .kicker{font-family:var(--arabic);letter-spacing:0;font-size:12.5px}
