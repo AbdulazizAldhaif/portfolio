@@ -26,9 +26,28 @@
 <div class="progress" aria-hidden="true"><span class="progress-fill"></span></div>
 <div class="grain" aria-hidden="true"></div>
 
+<div class="topbar">
+  <div class="lang-pill" role="group" aria-label="Language">
+    <button type="button" class="lang-opt" data-lang="en" lang="en" aria-pressed="true">EN</button>
+    <button type="button" class="lang-opt" data-lang="ar" lang="ar" aria-pressed="false">عربي</button>
+  </div>
+  <a class="cv-btn" href="assets/cv/Abdulaziz-Aldhaif-CV-EN.pdf" target="_blank" rel="noreferrer" data-cv-en="assets/cv/Abdulaziz-Aldhaif-CV-EN.pdf" data-cv-ar="assets/cv/Abdulaziz-Aldhaif-CV-AR.pdf"><span class="i18n-cv">CV</span> ↗</a>
+</div>
+
+<div class="welcome" role="dialog" aria-modal="true" aria-label="Choose your language · اختر لغتك" hidden>
+  <div class="welcome-inner">
+    <p class="welcome-kicker"><span lang="en">CHOOSE YOUR LANGUAGE</span><span class="welcome-dot" aria-hidden="true">·</span><span lang="ar" dir="rtl">اختر لغتك</span></p>
+    <div class="welcome-choices">
+      <button type="button" class="welcome-btn" data-lang="en" lang="en"><span class="wb-big">English</span><span class="wb-sub">Abdulaziz Aldhaif</span></button>
+      <button type="button" class="welcome-btn" data-lang="ar" lang="ar" dir="rtl"><span class="wb-big">العربية</span><span class="wb-sub">عبدالعزيز الضيف</span></button>
+    </div>
+  </div>
+  <div class="wipe" aria-hidden="true"></div>
+</div>
+
 <header class="hero">
   <div class="hero-fx" aria-hidden="true"><span class="beam b1"></span><span class="beam b2"></span><span class="beam b3"></span></div>
-  <div class="hero-top"><span>AA — 2026</span><span class="hero-top-right"><span class="ar-tag i18n-city" lang="ar" dir="rtl">الرياض</span><button class="lang-toggle" type="button" lang="ar" aria-label="التبديل إلى العربية">عربي</button></span></div>
+  <div class="hero-top"><span>AA — 2026</span><span class="ar-tag i18n-city" lang="ar" dir="rtl">الرياض</span></div>
   <div class="hero-stage">
     <div class="hero-ghost" lang="ar" dir="rtl">عبدالعزيز الضيف</div>
     <h1 class="hero-name">
@@ -42,9 +61,12 @@
 </header>
 
 <div class="scroll-hint" aria-hidden="true">
-  <svg class="hint-mouse" viewBox="0 0 24 40" width="22" height="36" fill="none" stroke="#E7B45A" stroke-width="1.5"><rect x="2" y="2" width="20" height="36" rx="10"/><circle class="hint-dot" cx="12" cy="11" r="2.4" fill="#E7B45A" stroke="none"/></svg>
-  <svg class="hint-hand" viewBox="0 0 32 40" width="26" height="34" fill="none" stroke="#E7B45A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V7a2.5 2.5 0 0 1 5 0v10"/><path d="M17 15.5a2.5 2.5 0 0 1 5 0V19a2.4 2.4 0 0 1 4.6 1l-1.4 8.2A8 8 0 0 1 17.3 35h-1.6a8 8 0 0 1-6.5-3.3l-4.6-6.4a2.3 2.3 0 0 1 3.5-2.9l2.9 2.9"/></svg>
-  <span class="hint-arrow"></span>
+  <div class="hint-card">
+    <svg class="hint-mouse" viewBox="0 0 24 40" width="48" height="80" fill="none" stroke="#E7B45A" stroke-width="1.3"><rect x="2" y="2" width="20" height="36" rx="10"/><circle class="hint-dot" cx="12" cy="11" r="2.6" fill="#E7B45A" stroke="none"/></svg>
+    <svg class="hint-hand" viewBox="0 0 32 40" width="62" height="78" fill="none" stroke="#E7B45A" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V7a2.5 2.5 0 0 1 5 0v10"/><path d="M17 15.5a2.5 2.5 0 0 1 5 0V19a2.4 2.4 0 0 1 4.6 1l-1.4 8.2A8 8 0 0 1 17.3 35h-1.6a8 8 0 0 1-6.5-3.3l-4.6-6.4a2.3 2.3 0 0 1 3.5-2.9l2.9 2.9"/></svg>
+    <svg class="hint-arrow" viewBox="0 0 16 40" width="16" height="40" fill="none" stroke="#E7B45A" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v34"/><path d="M2 30l6 7 6-7"/></svg>
+    <span class="hint-label i18n-hint">Scroll to explore</span>
+  </div>
 </div>
 
 <main>
@@ -52,17 +74,22 @@
 <section class="col cases" aria-label="Selected work">
 
   <article class="case">
+    <span class="case-num" aria-hidden="true">01</span>
+    <div class="case-side">
     <div class="case-top" data-reveal="0">
       <span class="kicker gold">SELECTED WORK — 01</span>
       <span class="ar-tag" lang="ar" dir="rtl">دراسة حالة</span>
     </div>
-    <span class="case-num" aria-hidden="true">01</span>
     <div class="case-title" data-reveal="60">
       <span class="case-logo" aria-hidden="true"><img src="assets/logos/eidaah.png" alt="" onerror="this.remove()"><span lang="ar">إ</span></span>
       <h2>Eidaah</h2>
       <span class="case-ar" lang="ar" dir="rtl">إيضاح</span>
     </div>
     <p class="case-meta" data-reveal="100">AI study platform for Arabic-speaking university students — built by a 3-person team.</p>
+    <p class="stack" data-reveal="0">React · FastAPI · Supabase · Groq</p>
+    <div class="cta" data-reveal="0"><a class="btn" data-magnet href="https://eidaah-jgqp.vercel.app" target="_blank" rel="noreferrer">eidaah-jgqp.vercel.app ↗</a></div>
+    </div>
+    <div class="case-main">
     <div class="block block-first" data-reveal="0">
       <div class="kicker dim">PROBLEM</div>
       <p class="problem">Course material lives in scattered slides and videos, with no interactive way to study it in Arabic.</p>
@@ -81,22 +108,26 @@
       <div class="stat"><div class="stat-n"><span data-count="13">13</span></div><div class="stat-label">DB TABLES</div></div>
       <div class="stat"><div class="stat-n"><span data-count="277">277</span></div><div class="stat-label">PASSING TESTS</div></div>
     </div>
-    <p class="stack" data-reveal="0">React · FastAPI · Supabase · Groq</p>
-    <div class="cta" data-reveal="0"><a class="btn" data-magnet href="https://eidaah-jgqp.vercel.app" target="_blank" rel="noreferrer">eidaah-jgqp.vercel.app ↗</a></div>
+    </div>
   </article>
 
   <article class="case">
+    <span class="case-num" aria-hidden="true">02</span>
+    <div class="case-side">
     <div class="case-top" data-reveal="0">
       <span class="kicker gold">SELECTED WORK — 02</span>
       <span class="ar-tag" lang="ar" dir="rtl">دراسة حالة</span>
     </div>
-    <span class="case-num" aria-hidden="true">02</span>
     <div class="case-title" data-reveal="60">
       <span class="case-logo" aria-hidden="true"><img src="assets/logos/sahiifh.png" alt="" onerror="this.remove()"><span lang="ar">ص</span></span>
       <h2>Sahifat Itma'inn</h2>
       <span class="case-ar" lang="ar" dir="rtl">صحيفة اطمئن</span>
     </div>
     <p class="case-meta" data-reveal="100">Bilingual newspaper platform plus internal newsroom system — built solo.</p>
+    <p class="stack" data-reveal="0">Next.js · Supabase · Brevo</p>
+    <div class="cta" data-reveal="0"><a class="btn" data-magnet href="https://sahiifh-newspaper.vercel.app" target="_blank" rel="noreferrer">sahiifh-newspaper.vercel.app ↗</a></div>
+    </div>
+    <div class="case-main">
     <div class="block block-first" data-reveal="0">
       <div class="kicker dim">PROBLEM</div>
       <p class="problem">34 volunteers coordinated through spreadsheets and chat; articles had no tracked path to publication.</p>
@@ -115,22 +146,26 @@
       <div class="stat"><div class="stat-n"><span data-count="91">91</span></div><div class="stat-label">COMMITS</div></div>
       <div class="stat"><div class="stat-n"><span data-count="1">1</span></div><div class="stat-label">DEVELOPER</div></div>
     </div>
-    <p class="stack" data-reveal="0">Next.js · Supabase · Brevo</p>
-    <div class="cta" data-reveal="0"><a class="btn" data-magnet href="https://sahiifh-newspaper.vercel.app" target="_blank" rel="noreferrer">sahiifh-newspaper.vercel.app ↗</a></div>
+    </div>
   </article>
 
   <article class="case">
+    <span class="case-num" aria-hidden="true">03</span>
+    <div class="case-side">
     <div class="case-top" data-reveal="0">
       <span class="kicker gold">SELECTED WORK — 03</span>
       <span class="ar-tag" lang="ar" dir="rtl">دراسة حالة</span>
     </div>
-    <span class="case-num" aria-hidden="true">03</span>
     <div class="case-title" data-reveal="60">
       <span class="case-logo" aria-hidden="true"><img src="assets/logos/masari.png" alt="" onerror="this.remove()"><span lang="ar">م</span></span>
       <h2>Masari</h2>
       <span class="case-ar" lang="ar" dir="rtl">مساري</span>
     </div>
     <p class="case-meta" data-reveal="100">Turns an IMSIU degree plan into an interactive term-by-term graduation roadmap — 2-person project; I owned logic and data quality.</p>
+    <p class="stack" data-reveal="0">Vanilla JavaScript · Supabase</p>
+    <div class="cta" data-reveal="0"><a class="btn" data-magnet href="https://msari.vercel.app" target="_blank" rel="noreferrer">msari.vercel.app ↗</a></div>
+    </div>
+    <div class="case-main">
     <div class="block block-first" data-reveal="0">
       <div class="kicker dim">PROBLEM</div>
       <p class="problem">Students plan registration from static PDFs and guess at prerequisite chains; one wrong guess delays graduation.</p>
@@ -148,8 +183,7 @@
       <div class="stat"><div class="stat-n"><span data-count="49">49</span></div><div class="stat-label">TESTS</div></div>
       <div class="stat"><div class="stat-n"><span data-count="47">47</span></div><div class="stat-label">CLOSED ISSUES</div></div>
     </div>
-    <p class="stack" data-reveal="0">Vanilla JavaScript · Supabase</p>
-    <div class="cta" data-reveal="0"><a class="btn" data-magnet href="https://msari.vercel.app" target="_blank" rel="noreferrer">msari.vercel.app ↗</a></div>
+    </div>
   </article>
 
 </section>
@@ -241,6 +275,7 @@
     <div class="contact-lines" data-reveal="0">
       <a class="ulink" href="mailto:abdulaziz.aldhif@gmail.com">abdulaziz.aldhif@gmail.com</a>
       <a class="ulink" href="https://www.linkedin.com/in/abdulaziz-aldhaif-a09786218/" target="_blank" rel="noreferrer">linkedin.com/in/abdulaziz-aldhaif</a>
+      <a class="ulink cv-line" href="assets/cv/Abdulaziz-Aldhaif-CV-EN.pdf" target="_blank" rel="noreferrer" data-cv-en="assets/cv/Abdulaziz-Aldhaif-CV-EN.pdf" data-cv-ar="assets/cv/Abdulaziz-Aldhaif-CV-AR.pdf"><span class="i18n-cvline">View CV (PDF)</span> ↗</a>
     </div>
   </div>
 </section>

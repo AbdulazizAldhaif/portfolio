@@ -28,7 +28,7 @@
   };
   // Accessible names in Arabic mode (keyed by the English aria-label in the HTML)
   const ARIA_AR = {
-    'Selected work': 'أعمال مختارة', 'Also built': 'أعمال أخرى', 'Contact': 'تواصل',
+    'Selected work': 'أعمال مختارة', 'Also built': 'أعمال أخرى', 'Contact': 'تواصل', 'Language': 'اللغة',
     'WhatsApp': 'واتساب', 'LinkedIn': 'لينكدإن', 'GitHub': 'جيت هب', 'Email': 'البريد الإلكتروني',
     'WhatsApp — hiring': 'واتساب — توظيف', 'Email — hiring': 'بريد — توظيف',
     'WhatsApp — coop / training': 'واتساب — تدريب تعاوني', 'Email — coop / training': 'بريد — تدريب تعاوني',
@@ -67,7 +67,9 @@
 
   const T = {
     city: { en: 'الرياض', ar: 'RIYADH' },
-    toggle: { en: 'عربي', ar: 'EN' },
+    cv: { en: 'CV', ar: 'السيرة' },
+    cvline: { en: 'View CV (PDF)', ar: 'عرض السيرة الذاتية (PDF)' },
+    hint: { en: 'Scroll to explore', ar: 'مرر للاستكشاف' },
     name1: { en: 'Abdulaziz', ar: 'عبدالعزيز' },
     name2: { en: 'Aldhaif', ar: 'الضيف' },
     ghost: { en: 'عبدالعزيز الضيف', ar: 'Abdulaziz Aldhaif' },
@@ -93,8 +95,10 @@
     collab: { en: 'COLLABORATION', ar: 'تعاون' }
   };
 
-  let lang = 'en';
-  try { lang = localStorage.getItem('lang') === 'ar' ? 'ar' : 'en'; } catch (e) { /* private mode */ }
+  let lang = 'en', storedLang = null;
+  try { storedLang = localStorage.getItem('lang'); } catch (e) { /* private mode */ }
+  if (storedLang === 'ar') lang = 'ar';
+  const firstVisit = storedLang !== 'en' && storedLang !== 'ar';
 
   function applyLang(next) {
     lang = next;
@@ -107,12 +111,11 @@
     // Accent elements hold the *other* language: flip their lang/dir with the text
     const accent = (el) => { el.lang = next === 'ar' ? 'en' : 'ar'; el.dir = next === 'ar' ? 'ltr' : 'rtl'; };
     $$('.i18n-city').forEach((el) => { el.textContent = T.city[next]; accent(el); });
-    const toggle = $('.lang-toggle');
-    if (toggle) {
-      toggle.textContent = T.toggle[next];
-      toggle.lang = next === 'ar' ? 'en' : 'ar';
-      toggle.setAttribute('aria-label', next === 'ar' ? 'Switch to English' : 'التبديل إلى العربية');
-    }
+    $$('.lang-opt').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.lang === next)));
+    $$('[data-cv-en]').forEach((a) => { a.href = next === 'ar' ? a.dataset.cvAr : a.dataset.cvEn; });
+    setText('.i18n-cv', T.cv[next]);
+    setText('.i18n-cvline', T.cvline[next]);
+    setText('.i18n-hint', T.hint[next]);
     $('.line-1').textContent = T.name1[next];
     $('.line-2').textContent = T.name2[next];
     const ghost = $('.hero-ghost');
@@ -166,7 +169,6 @@
 
     // Accessible names follow the page language
     $$('[aria-label]').forEach((el) => {
-      if (el.classList.contains('lang-toggle')) return;
       if (!el.dataset.ariaEn) el.dataset.ariaEn = el.getAttribute('aria-label');
       const en = el.dataset.ariaEn;
       el.setAttribute('aria-label', next === 'ar' && ARIA_AR[en] ? ARIA_AR[en] : en);
@@ -233,12 +235,20 @@
     }
   }
 
-  const toggleBtn = $('.lang-toggle');
   if (lang === 'ar') applyLang('ar');
+
+  const welcome = $('.welcome');
+  const bindLang = (handler) => $$('.lang-opt').forEach((b) => {
+    b.addEventListener('click', () => { if (b.dataset.lang !== lang) handler(b.dataset.lang); });
+  });
 
   if (reduceMotion || !window.gsap || !window.ScrollTrigger) {
     fallback();
-    if (toggleBtn) toggleBtn.addEventListener('click', () => applyLang(lang === 'ar' ? 'en' : 'ar'));
+    bindLang((next) => applyLang(next));
+    if (welcome && firstVisit) {
+      welcome.hidden = false;
+      $$('.welcome-btn', welcome).forEach((b) => b.addEventListener('click', () => { applyLang(b.dataset.lang); welcome.hidden = true; }));
+    }
     return;
   }
 
@@ -267,7 +277,8 @@
   });
 
   /* ---------- Hero entrance ---------- */
-  const heroTl = gsap.timeline({ defaults: { ease: 'power4.out' } });
+  // On a first visit the entrance waits behind the language chooser
+  const heroTl = gsap.timeline({ defaults: { ease: 'power4.out' }, paused: firstVisit });
   gsap.set('.line', { yPercent: 110 });
   gsap.set('.hero-ghost', { autoAlpha: 0, y: -34, scale: 1.05 });
   gsap.set(['.hero-lede', '.hero-meta', '.hero-scroll'], { autoAlpha: 0, y: 18 });
@@ -319,6 +330,35 @@
     });
   }
   heroTl.add(runTypewriter, 1.3);
+
+  /* ---------- Scroll gesture demo: centred, after the hero settles, gone on first scroll ---------- */
+  let userScrolled = false;
+  window.addEventListener('scroll', () => { userScrolled = true; }, { once: true, passive: true });
+  function showScrollHint() {
+    const hint = $('.scroll-hint');
+    if (!hint || userScrolled || window.scrollY > 4) return;
+    const touch = window.matchMedia('(pointer: coarse)').matches;
+    hint.classList.add(touch ? 'hand' : 'mouse');
+    const loop = gsap.timeline({ repeat: -1, repeatDelay: 0.35 });
+    if (touch) {
+      loop.fromTo('.hint-hand', { y: 26, opacity: 0.35 }, { y: -22, opacity: 1, duration: 0.85, ease: 'power2.out' })
+        .to('.hint-hand', { opacity: 0.35, duration: 0.35 }, '+=0.2');
+    } else {
+      loop.fromTo('.hint-dot', { y: 0, opacity: 1 }, { y: 15, opacity: 0, duration: 1, ease: 'power2.in' });
+    }
+    loop.fromTo('.hint-arrow', { y: -4, opacity: 0.5 }, { y: 6, opacity: 1, duration: 0.9, ease: 'power2.inOut', yoyo: true, repeat: 1 }, 0);
+    gsap.fromTo(hint, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.6 });
+    gsap.fromTo('.hint-card', { scale: 0.92 }, { scale: 1, duration: 0.6, ease: 'power3.out' });
+    const dismiss = () => {
+      loop.kill();
+      gsap.to(hint, { autoAlpha: 0, duration: 0.3, onComplete: () => hint.remove() });
+      window.removeEventListener('scroll', dismiss);
+      if (lenis) lenis.off('scroll', dismiss);
+    };
+    window.addEventListener('scroll', dismiss, { passive: true });
+    if (lenis) lenis.on('scroll', dismiss);
+  }
+  heroTl.eventCallback('onComplete', () => gsap.delayedCall(0.4, showScrollHint));
 
   /* ---------- Hero ambience, exit scrub, mouse parallax ---------- */
   const beamTl = gsap.timeline({ repeat: -1, yoyo: true, defaults: { ease: 'sine.inOut' } });
@@ -568,34 +608,6 @@
     }
   }
 
-  /* ---------- First-visit scroll gesture hint ---------- */
-  const hint = $('.scroll-hint');
-  let hintSeen = false;
-  try { hintSeen = localStorage.getItem('hintSeen') === '1'; } catch (e) { /* private mode */ }
-  if (hint && !hintSeen) {
-    hint.classList.add(window.matchMedia('(pointer: coarse)').matches ? 'hand' : 'mouse');
-    const dot = $('.hint-dot', hint);
-    const hand = $('.hint-hand', hint);
-    const hintLoop = gsap.timeline({ repeat: -1, repeatDelay: 0.5, paused: true });
-    if (hint.classList.contains('mouse') && dot) {
-      hintLoop.fromTo(dot, { y: 0, opacity: 1 }, { y: 14, opacity: 0, duration: 0.9, ease: 'power2.in' });
-    } else if (hand) {
-      hintLoop.fromTo(hand, { y: 8, opacity: 0.4 }, { y: -8, opacity: 1, duration: 0.7, ease: 'power2.out' })
-        .to(hand, { opacity: 0.4, duration: 0.4 }, '+=0.15');
-    }
-    const show = gsap.delayedCall(3.2, () => { gsap.to(hint, { autoAlpha: 1, duration: 0.5 }); hintLoop.play(); });
-    const dismiss = () => {
-      show.kill();
-      hintLoop.kill();
-      gsap.to(hint, { autoAlpha: 0, duration: 0.3, onComplete: () => hint.remove() });
-      try { localStorage.setItem('hintSeen', '1'); } catch (e) { /* private mode */ }
-      window.removeEventListener('scroll', dismiss);
-      if (lenis) lenis.off('scroll', dismiss);
-    };
-    window.addEventListener('scroll', dismiss, { once: true, passive: true });
-    if (lenis) lenis.on('scroll', dismiss);
-  }
-
   }
 
   function initPointerFx() {
@@ -652,33 +664,71 @@
   }
 
   const idle = (fn) => ('requestIdleCallback' in window) ? requestIdleCallback(fn, { timeout: 900 }) : setTimeout(fn, 80);
-  idle(() => {
-    initBelowFold();
-    ScrollTrigger.refresh();
-    idle(() => { initBandAndHint(); idle(initPointerFx); });
-  });
-
-  /* ---------- Language toggle (full GSAP path) ---------- */
-  if (toggleBtn) {
-    toggleBtn.addEventListener('click', () => {
-      finishHero(); // complete any running entrance before swapping text
-      const next = lang === 'ar' ? 'en' : 'ar';
-      applyLang(next);
-      caseState.forEach((s) => {
-        const st = s.tl.scrollTrigger;
-        const revealed = s.tl.progress() > 0 || (st && st.isActive);
-        if (revealed) {
-          // Already on screen: the new text simply stays visible
-          gsap.set($('.case-title h2', s.el), { clearProps: 'all' });
-        } else {
-          // Not yet revealed: rebuild the entrance in the new language/direction
-          if (st) st.kill();
-          s.tl.kill();
-          s.tl = buildCaseInternals(s.el);
-        }
-      });
-      buildDidScrub();
+  let belowFoldStarted = false;
+  function startBelowFold() {
+    if (belowFoldStarted) return;
+    belowFoldStarted = true;
+    idle(() => {
+      initBelowFold();
       ScrollTrigger.refresh();
+      idle(() => { initBandAndHint(); idle(initPointerFx); });
+    });
+  }
+  if (!firstVisit) startBelowFold();
+
+  /* ---------- Language switching (pill) ---------- */
+  function switchLang(next) {
+    finishHero(); // complete any running entrance before swapping text
+    applyLang(next);
+    caseState.forEach((s) => {
+      const st = s.tl.scrollTrigger;
+      const revealed = s.tl.progress() > 0 || (st && st.isActive);
+      if (revealed) {
+        // Already on screen: the new text simply stays visible
+        gsap.set($('.case-title h2', s.el), { clearProps: 'all' });
+      } else {
+        // Not yet revealed: rebuild the entrance in the new language/direction
+        if (st) st.kill();
+        s.tl.kill();
+        s.tl = buildCaseInternals(s.el);
+      }
+    });
+    buildDidScrub();
+    ScrollTrigger.refresh();
+  }
+  bindLang(switchLang);
+
+  /* ---------- First visit: choose a language, gold wipe, then the entrance plays ---------- */
+  if (welcome && firstVisit) {
+    welcome.hidden = false;
+    doc.classList.add('lock');
+    if (lenis) lenis.stop();
+    const wipe = $('.wipe', welcome);
+    const inner = $('.welcome-inner', welcome);
+    gsap.set(wipe, { scaleX: 0, transformOrigin: '0% 50%' });
+    gsap.fromTo(inner, { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.7, ease: 'power3.out', delay: 0.15 });
+    $$('.welcome-btn', welcome).forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const choice = btn.dataset.lang;
+        const all = $$('.welcome-btn', welcome);
+        all.forEach((b) => { b.disabled = true; });
+        gsap.timeline()
+          .to(all.filter((b) => b !== btn), { autoAlpha: 0, duration: 0.25, ease: 'power2.out' }, 0)
+          .to(btn, { scale: 1.06, duration: 0.3, ease: 'power2.out' }, 0)
+          .to(wipe, { scaleX: 1, duration: 0.55, ease: 'power3.inOut' }, 0.15)
+          .add(() => {
+            applyLang(choice); // swap everything while the page is fully covered
+            gsap.set(inner, { autoAlpha: 0 });
+            gsap.set(welcome, { backgroundColor: 'transparent' });
+            gsap.set(wipe, { transformOrigin: choice === 'ar' ? '0% 50%' : '100% 50%' });
+            doc.classList.remove('lock');
+            if (lenis) lenis.start();
+            startBelowFold();
+          })
+          .to(wipe, { scaleX: 0, duration: 0.6, ease: 'power3.inOut' })
+          .add(() => heroTl.play(), '-=0.45')
+          .add(() => welcome.remove());
+      });
     });
   }
 

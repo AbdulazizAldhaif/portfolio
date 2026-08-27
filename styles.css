@@ -38,7 +38,8 @@ img{max-width:100%}
 
 /* ---------- Hero ---------- */
 .hero{min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;position:relative;max-width:640px;margin:0 auto;padding:24px 22px 34px}
-.hero-top{position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:18px 22px;font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:rgba(242,237,228,.5)}
+/* Tags sit at the inline-start; the fixed language/CV cluster owns the inline-end corner */
+.hero-top{position:absolute;top:0;left:0;right:0;display:flex;justify-content:flex-start;gap:18px;align-items:center;padding:18px 22px;font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:rgba(242,237,228,.5)}
 .hero-top .ar-tag{color:inherit}
 .hero-stage{position:relative;padding-top:84px}
 /* 13vw keeps the full name inside the viewport at every width (it is ~6.7× its font-size wide) */
@@ -202,13 +203,85 @@ html.ar .progress-fill{transform-origin:100% 50%}
 .gsap .hero-ghost,.gsap .line-1,.gsap .line-2,.gsap .hero-lede,.gsap .hero-meta,.gsap .hero-scroll{animation:none}
 .gsap [data-reveal]{transition:none}
 
-/* Language toggle */
-.hero-top-right{display:flex;align-items:center;gap:14px}
-.lang-toggle{display:none;font-family:var(--arabic);font-size:12px;line-height:1;background:none;border:1px solid rgba(231,180,90,.45);color:var(--gold);padding:5px 10px;cursor:pointer;letter-spacing:0;transition:background-color .18s cubic-bezier(.33,1,.68,1),color .18s cubic-bezier(.33,1,.68,1)}
-.js .lang-toggle{display:inline-block}
-.lang-toggle:hover{background:var(--gold);color:var(--bg)}
-.lang-toggle:focus-visible{outline:1px solid var(--gold);outline-offset:2px}
-html.ar .lang-toggle{font-family:var(--mono);font-size:10px;letter-spacing:.14em}
+/* Fixed language pill + CV button (always reachable) */
+.topbar{position:fixed;top:14px;inset-inline-end:16px;z-index:78;display:flex;align-items:center;gap:8px}
+.lang-pill{display:none;border:1px solid rgba(231,180,90,.5);background:rgba(18,16,12,.75)}
+.js .lang-pill{display:inline-flex}
+.lang-opt{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;line-height:1;padding:9px 11px;background:none;border:0;color:rgba(242,237,228,.7);cursor:pointer;transition:background-color .18s cubic-bezier(.33,1,.68,1),color .18s cubic-bezier(.33,1,.68,1)}
+.lang-opt[lang="ar"]{font-family:var(--arabic);font-size:12.5px;letter-spacing:0;padding:7px 11px 8px}
+.lang-opt[aria-pressed="true"]{background:var(--gold);color:var(--bg)}
+.lang-opt:hover:not([aria-pressed="true"]){color:var(--gold)}
+.lang-opt:focus-visible{outline:1px solid var(--gold);outline-offset:2px}
+.cv-btn{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;line-height:1;padding:9px 11px;border:1px solid rgba(231,180,90,.5);background:rgba(18,16,12,.75);color:var(--gold);text-decoration:none;transition:background-color .18s cubic-bezier(.33,1,.68,1),color .18s cubic-bezier(.33,1,.68,1)}
+.cv-btn:hover{background:var(--gold);color:var(--bg)}
+.cv-btn:focus-visible{outline:1px solid var(--gold);outline-offset:2px}
+html.ar .cv-btn{padding:7px 11px 8px}
+html.ar .cv-btn .i18n-cv{font-family:var(--arabic);font-size:12.5px;letter-spacing:0}
+.hero-top{padding-inline-end:200px}
+
+/* Welcome — language chooser on first visit */
+html.lock{overflow:hidden}
+.welcome{position:fixed;inset:0;z-index:90;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:24px}
+.welcome[hidden]{display:none}
+.welcome-inner{text-align:center;max-width:720px;width:100%}
+.welcome-kicker{margin:0 0 28px;font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;color:rgba(242,237,228,.55);display:flex;justify-content:center;align-items:baseline;gap:14px;flex-wrap:wrap}
+.welcome-kicker [lang="ar"]{font-family:var(--arabic);letter-spacing:0;font-size:13px}
+.welcome-dot{color:var(--gold)}
+.welcome-choices{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.welcome-btn{background:none;border:1px solid rgba(231,180,90,.5);color:var(--ink);padding:28px 18px 24px;cursor:pointer;display:flex;flex-direction:column;gap:10px;align-items:center;font-family:var(--sans);transition:background-color .18s cubic-bezier(.33,1,.68,1),color .18s cubic-bezier(.33,1,.68,1),border-color .18s cubic-bezier(.33,1,.68,1)}
+.welcome-btn[lang="ar"]{font-family:var(--arabic)}
+.wb-big{font-size:clamp(26px,5vw,40px);font-weight:600;letter-spacing:-.01em;line-height:1.1}
+.welcome-btn[lang="ar"] .wb-big{letter-spacing:0;font-weight:700}
+.wb-sub{font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:rgba(242,237,228,.5)}
+.welcome-btn[lang="ar"] .wb-sub{font-family:var(--arabic);letter-spacing:0;font-size:12px}
+.welcome-btn:hover,.welcome-btn:focus-visible{background:var(--gold);color:var(--bg);border-color:var(--gold);outline:none}
+.welcome-btn:hover .wb-sub,.welcome-btn:focus-visible .wb-sub{color:rgba(18,16,12,.7)}
+.wipe{position:absolute;inset:0;background:var(--gold);transform:scaleX(0);transform-origin:0 50%;pointer-events:none}
+@media (max-width:420px){.welcome-choices{grid-template-columns:1fr}}
+
+/* Case study: on mobile the side/main wrappers vanish and flex ordering keeps the reading order */
+.case{display:flex;flex-direction:column}
+.case-side,.case-main{display:contents}
+.case-top{order:1}.case-title{order:2}.case-meta{order:3}.block{order:5}.block-first{order:4}.quote{order:6}.stats{order:7}.stack{order:8}.cta{order:9}
+
+/* Desktop — use the whole screen */
+@media (min-width:1024px){
+  .col{max-width:1240px;padding:0 6vw}
+  .hero{max-width:none;padding:0 6vw 7vh;display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);column-gap:5vw;align-items:end;align-content:end}
+  .hero-top{padding:22px 6vw;padding-inline-end:240px}
+  .hero-stage{grid-column:1;grid-row:1/4;padding-top:0}
+  .hero-name{font-size:clamp(92px,9.2vw,150px);line-height:.98}
+  .hero-ghost{font-size:clamp(80px,7.6vw,118px);top:-.62em;right:-.1em}
+  html.ar .hero-name{font-size:clamp(80px,8vw,124px);line-height:1.15}
+  html.ar .hero-ghost{font-size:clamp(64px,6.4vw,100px);top:-1.45em;left:0}
+  .hero-lede{grid-column:2;grid-row:1;margin:0;max-width:none;font-size:clamp(22px,2.1vw,30px);line-height:1.4}
+  .hero-meta{grid-column:2;grid-row:2;margin-top:18px;font-size:11.5px}
+  .hero-scroll{grid-column:2;grid-row:3;margin-top:36px}
+  .case{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);column-gap:72px;padding:72px 0 96px}
+  .case-side,.case-main{display:block}
+  .case-side{position:sticky;top:12vh;align-self:start}
+  .case-num{font-size:clamp(200px,22vw,300px);top:-30px;right:-2vw}
+  html.ar .case-num{right:auto;left:-2vw}
+  .case-title h2{font-size:clamp(40px,3.6vw,56px)}
+  .case-ar{font-size:clamp(30px,2.6vw,40px)}
+  .case-meta{font-size:14px;max-width:34ch}
+  .stack{margin-top:36px}
+  .block-first{margin-top:0}
+  .block .problem{font-size:18px}
+  .block .did{font-size:15.5px;line-height:1.7}
+  .quote p{font-size:24px}
+  html.ar .quote p{font-size:22px}
+  .contact .section{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:72px}
+  .contact .section>.case-top{grid-column:1/-1}
+  .contact-head{grid-column:1;grid-row:2;margin-top:28px}
+  .lanes{grid-column:2;grid-row:2/span 3;grid-template-columns:1fr;align-content:start;margin-top:28px}
+  .social{grid-column:1;grid-row:3}
+  .contact-lines{grid-column:1;grid-row:4}
+  .portrait{width:120px;height:120px}
+  .contact-title{font-size:clamp(38px,3.4vw,52px)}
+  .marquee-band{padding:16px 0}
+  .mq{font-size:13px}
+}
 
 /* Monogram / logo tiles (drop a file into assets/logos/ to replace the initial) */
 .case-logo{width:32px;height:32px;flex:none;align-self:center;position:relative;display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(231,180,90,.4);background:rgba(231,180,90,.06);overflow:hidden}
@@ -222,13 +295,16 @@ html.ar .lang-toggle{font-family:var(--mono);font-size:10px;letter-spacing:.14em
 .case-num{position:absolute;top:-14px;right:-10px;z-index:-1;font-family:var(--sans);font-weight:700;font-size:clamp(110px,26vw,190px);line-height:1;letter-spacing:-.04em;color:transparent;-webkit-text-stroke:1px rgba(231,180,90,.16);pointer-events:none;font-variant-numeric:tabular-nums}
 html.ar .case-num{right:auto;left:-10px}
 
-/* First-visit scroll gesture hint */
-.scroll-hint{position:fixed;left:50%;bottom:24px;z-index:75;display:none;flex-direction:column;align-items:center;gap:7px;opacity:0;pointer-events:none;transform:translateX(-50%)}
+/* Scroll gesture demo — centred over a translucent scrim, gone on first scroll */
+.scroll-hint{position:fixed;inset:0;z-index:76;display:none;align-items:center;justify-content:center;opacity:0;pointer-events:none;background:rgba(18,16,12,.62)}
 .gsap .scroll-hint{display:flex}
+.hint-card{display:flex;flex-direction:column;align-items:center;gap:18px;padding:36px 44px;border:1px solid rgba(231,180,90,.35);background:rgba(18,16,12,.55)}
 .scroll-hint .hint-mouse,.scroll-hint .hint-hand{display:none}
 .scroll-hint.mouse .hint-mouse{display:block}
 .scroll-hint.hand .hint-hand{display:block}
-.hint-arrow{width:1px;height:16px;background:rgba(231,180,90,.8)}
+.hint-arrow{display:block}
+.hint-label{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--gold)}
+html.ar .hint-label{font-family:var(--arabic);letter-spacing:0;font-size:14px}
 
 /* Arabic mode typography — Arabic script never letter-spaces (it breaks joining) */
 html.ar body{font-family:var(--arabic)}
@@ -260,4 +336,6 @@ html.ar .contact-sub{line-height:1.7}
   .marquee-track{transform:none !important}
   .shimmer .sheen,.caret{display:none}
   .scroll-hint{display:none !important}
+  .welcome-inner{opacity:1 !important;visibility:visible !important;transform:none !important}
+  .wipe{display:none}
 }
