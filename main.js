@@ -5,6 +5,9 @@
   // The .js class arms the [data-reveal] hiding CSS; it must be added by the same
   // script that reveals, so a failed load can never strand content hidden.
   doc.classList.add('js');
+  // The intro (chooser, wipe, hero entrance) is choreographed from the top of the
+  // page, so reloads must not restore a deep scroll position.
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
@@ -116,13 +119,15 @@
       { sel: '.lang-pill', t: 'English or Arabic — anytime', d: 'Switch language here. Everything changes, even the pre-written WhatsApp and email messages.' },
       { sel: '.cv-btn', t: 'My CV', d: 'Opens as a PDF, in the language you’re reading.' },
       { sel: '.quicknav', t: 'Jump anywhere', d: 'Work, other projects, contact — one tap. Replay this tour from here too.' },
-      { sel: '.lanes', t: 'Pick a topic, then a channel', d: 'Hiring, coop or collaboration — WhatsApp or email, with the message already written for you.', scroll: true }
+      { sel: '.lanes', t: 'Pick a topic, then a channel', d: 'Hiring, coop or collaboration — WhatsApp or email, with the message already written for you.', scroll: true },
+      { sel: '.social', t: 'One tap to reach me', d: 'WhatsApp, LinkedIn, GitHub, email — each icon opens directly.' }
     ] },
     ar: { skip: 'تخطي الجولة', next: 'التالي', done: 'العودة للأعلى', of: 'من', steps: [
       { sel: '.lang-pill', t: 'عربي أو English — في أي وقت', d: 'بدّل اللغة من هنا. كل شيء يتغير، حتى رسائل واتساب والبريد الجاهزة.' },
       { sel: '.cv-btn', t: 'سيرتي الذاتية', d: 'تُفتح بصيغة PDF باللغة التي تقرأ بها.' },
       { sel: '.quicknav', t: 'انتقل إلى أي قسم', d: 'أعمالي، مشاريع أخرى، تواصل — بنقرة واحدة. ويمكنك إعادة هذه الجولة من هنا.' },
-      { sel: '.lanes', t: 'اختر الموضوع ثم القناة', d: 'توظيف أو تدريب أو تعاون — واتساب أو بريد، والرسالة جاهزة لك.', scroll: true }
+      { sel: '.lanes', t: 'اختر الموضوع ثم القناة', d: 'توظيف أو تدريب أو تعاون — واتساب أو بريد، والرسالة جاهزة لك.', scroll: true },
+      { sel: '.social', t: 'نقرة واحدة للوصول إليّ', d: 'واتساب، لينكدإن، جيت هب، البريد — كل أيقونة تفتح مباشرة.' }
     ] }
   };
 
@@ -276,6 +281,7 @@
   });
   $$('.replay-intro').forEach((b) => b.addEventListener('click', () => {
     try { localStorage.removeItem(LANG_KEY); localStorage.removeItem(TOUR_KEY); } catch (e) { /* private mode */ }
+    window.scrollTo(0, 0);
     location.reload();
   }));
 
@@ -700,10 +706,12 @@
   /* ---------- Reveals outside the cases ---------- */
   const rest = $$('[data-reveal]').filter((el) => !el.closest('.case'));
   gsap.set(rest, { autoAlpha: 0, y: 20 });
-  ScrollTrigger.batch(rest, {
-    start: 'top 88%', once: true,
-    onEnter: (batch) => gsap.to(batch, { autoAlpha: 1, y: 0, stagger: 0.09, duration: 0.6, ease: 'power3.out' })
-  });
+  const revealBatch = (batch) => gsap.to(batch, { autoAlpha: 1, y: 0, stagger: 0.09, duration: 0.6, ease: 'power3.out', overwrite: 'auto' });
+  ScrollTrigger.batch(rest, { start: 'top 88%', onEnter: revealBatch, onEnterBack: revealBatch });
+  // Anything already scrolled past when this runs (deep link, restored scroll) must not stay hidden
+  const abovePassed = (el) => el.getBoundingClientRect().bottom < 0;
+  gsap.set(rest.filter(abovePassed), { autoAlpha: 1, y: 0 });
+  caseState.forEach((s) => { if (abovePassed(s.el)) s.tl.progress(1); });
 
   }
 
@@ -848,7 +856,17 @@
   if (welcome && firstVisit) {
     welcome.hidden = false;
     doc.classList.add('lock');
+    // A reload can restore a deep scroll position (and some browsers do it after
+    // this script runs), so pin the page to the top until the intro is done.
+    const pinTop = () => {
+      window.scrollTo(0, 0);
+      if (lenis) lenis.scrollTo(0, { immediate: true, force: true });
+    };
+    pinTop();
+    requestAnimationFrame(pinTop);
+    window.addEventListener('load', pinTop);
     if (lenis) lenis.stop();
+    ScrollTrigger.refresh();
     const wipe = $('.wipe', welcome);
     const inner = $('.welcome-inner', welcome);
     gsap.set(wipe, { scaleX: 0, transformOrigin: '0% 50%' });

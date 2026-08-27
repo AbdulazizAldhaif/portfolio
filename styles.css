@@ -89,7 +89,9 @@ img{max-width:100%}
 .quote{margin-top:28px;padding:18px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);position:relative}
 .q-rule{position:absolute;top:-1px;left:0;right:0;height:1px;background:var(--gold)}
 .quote p{margin:10px 0 0;font-size:18.5px;line-height:1.42;font-weight:500}
-.stats{margin-top:28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+/* Column count follows the stat count so the grid never leaves an empty cell */
+.stats{margin-top:28px;display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+.stats[data-n="3"]{grid-template-columns:repeat(3,1fr)}
 .stat{background:var(--bg);padding:16px 14px}
 .stat-n{font-size:30px;font-weight:600;color:var(--gold);font-variant-numeric:tabular-nums;line-height:1}
 .stat-suffix{font-size:16px;font-weight:500}
@@ -282,16 +284,20 @@ html.ar .tour-text{line-height:1.75}
 /* Desktop — use the whole screen */
 @media (min-width:1024px){
   .col{max-width:1240px;padding:0 6vw}
-  .hero{max-width:none;padding:0 6vw 7vh;display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);column-gap:5vw;align-items:end;align-content:end}
+  /* Rows: statement, meta, then a flexible row that pins the scroll cue to the
+     floor — so the frame reads as a diagonal, not a bottom-heavy strip. */
+  .hero{max-width:none;padding:19vh 6vw 7vh;display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);grid-template-rows:auto auto 1fr;column-gap:5vw}
   .hero-top{padding:22px 6vw;padding-inline-end:240px}
-  .hero-stage{grid-column:1;grid-row:1/4;padding-top:0}
+  .hero-stage{grid-column:1;grid-row:1/4;padding-top:0;align-self:end}
   .hero-name{font-size:clamp(92px,9.2vw,150px);line-height:.98}
   .hero-ghost{font-size:clamp(80px,7.6vw,118px);top:-.62em;right:-.1em}
-  html.ar .hero-name{font-size:clamp(80px,8vw,124px);line-height:1.15}
-  html.ar .hero-ghost{font-size:clamp(64px,6.4vw,100px);top:-1.45em;left:0}
-  .hero-lede{grid-column:2;grid-row:1;margin:0;max-width:none;font-size:clamp(22px,2.1vw,30px);line-height:1.4}
-  .hero-meta{grid-column:2;grid-row:2;margin-top:18px;font-size:11.5px}
-  .hero-scroll{grid-column:2;grid-row:3;margin-top:36px}
+  /* NOTE: Arabic desktop hero overrides live at the end of this file — the
+     generic `html.ar` block below would otherwise win on equal specificity. */
+  /* Diagonal composition: statement high on the right, name low on the left,
+     so the viewport reads as one balanced frame instead of a bottom-heavy strip. */
+  .hero-lede{grid-column:2;grid-row:1;align-self:start;margin:0;max-width:none;font-size:clamp(22px,2.1vw,30px);line-height:1.4}
+  .hero-meta{grid-column:2;grid-row:2;align-self:start;margin-top:20px;font-size:11.5px}
+  .hero-scroll{grid-column:2;grid-row:3;align-self:end;margin-top:30px}
   .case{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);column-gap:72px;padding:72px 0 96px}
   .case-side,.case-main{display:block}
   .case-side{position:sticky;top:12vh;align-self:start}
@@ -304,6 +310,7 @@ html.ar .tour-text{line-height:1.75}
   .block-first{margin-top:0}
   .block .problem{font-size:18px}
   .block .did{font-size:15.5px;line-height:1.7}
+  .stats[data-n="4"]{grid-template-columns:repeat(4,1fr)}
   .quote p{font-size:24px}
   html.ar .quote p{font-size:22px}
   .contact .section{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:72px}
@@ -382,3 +389,10 @@ html.ar .contact-sub{line-height:1.7}
 
 /* Keep the footer clear of the mobile quick-nav bar */
 @media (max-width:1023px){.js .foot{padding-bottom:72px}}
+
+/* ---------- Arabic desktop hero (must follow the generic html.ar block) ---------- */
+@media (min-width:1024px){
+  html.ar .hero-name{font-size:clamp(76px,7.4vw,116px);line-height:1.14}
+  /* nowrap keeps the Latin ghost on one line so it never collides with the name */
+  html.ar .hero-ghost{font-size:clamp(46px,5vw,80px);white-space:nowrap;width:auto;top:-.92em;left:0;right:auto;text-align:left}
+}

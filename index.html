@@ -10,6 +10,8 @@
 <link rel="preload" href="assets/fonts/ibmplexmono-400-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/ibmplexsansarabic-700-arabic.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/ibmplexsansarabic-400-arabic.woff2" as="font" type="font/woff2" crossorigin>
+<script>/* must run before the browser restores a scroll position: the intro plays from the top */
+try{history.scrollRestoration='manual'}catch(e){}</script>
 <link rel="stylesheet" href="styles.css">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
@@ -127,7 +129,7 @@
       <div class="kicker gold-dim">DECISION I'D DEFEND</div>
       <p>Every file is processed by the LLM <span class="gold">once at approval</span> and stored, so AI cost stays flat no matter how many students study it.</p>
     </div>
-    <div class="stats" data-reveal="0">
+    <div class="stats" data-n="4" data-reveal="0">
       <div class="stat"><div class="stat-n"><span data-count="19">19</span></div><div class="stat-label">API ENDPOINTS</div></div>
       <div class="stat"><div class="stat-n"><span data-count="18">18</span></div><div class="stat-label">SCREENS</div></div>
       <div class="stat"><div class="stat-n"><span data-count="13">13</span></div><div class="stat-label">DB TABLES</div></div>
@@ -165,7 +167,7 @@
       <div class="kicker gold-dim">DECISION I'D DEFEND</div>
       <p>Permissions resolve through <span class="gold">one SQL function</span> mirrored client-side, so unknown roles fail closed and can never escalate.</p>
     </div>
-    <div class="stats" data-reveal="0">
+    <div class="stats" data-n="4" data-reveal="0">
       <div class="stat"><div class="stat-n"><span data-count="35">35</span><span class="stat-suffix">×2</span></div><div class="stat-label">SCREENS × LANGS</div></div>
       <div class="stat"><div class="stat-n"><span data-count="16">16</span></div><div class="stat-label">DB TABLES</div></div>
       <div class="stat"><div class="stat-n"><span data-count="91">91</span></div><div class="stat-label">COMMITS</div></div>
@@ -203,7 +205,7 @@
       <div class="kicker gold-dim">DECISION I'D DEFEND</div>
       <p><span class="gold">Never trust the source data.</span></p>
     </div>
-    <div class="stats" data-reveal="0">
+    <div class="stats" data-n="3" data-reveal="0">
       <div class="stat"><div class="stat-n"><span data-count="3">3</span></div><div class="stat-label">DEGREE PLANS</div></div>
       <div class="stat"><div class="stat-n"><span data-count="49">49</span></div><div class="stat-label">TESTS</div></div>
       <div class="stat"><div class="stat-n"><span data-count="47">47</span></div><div class="stat-label">CLOSED ISSUES</div></div>
@@ -298,8 +300,6 @@
       </a>
     </div>
     <div class="contact-lines" data-reveal="0">
-      <a class="ulink" href="mailto:abdulaziz.aldhif@gmail.com">abdulaziz.aldhif@gmail.com</a>
-      <a class="ulink" href="https://www.linkedin.com/in/abdulaziz-aldhaif-a09786218/" target="_blank" rel="noreferrer">linkedin.com/in/abdulaziz-aldhaif</a>
       <a class="ulink cv-line" href="assets/cv/Abdulaziz-Aldhaif-CV-EN.pdf" target="_blank" rel="noreferrer" data-cv-en="assets/cv/Abdulaziz-Aldhaif-CV-EN.pdf" data-cv-ar="assets/cv/Abdulaziz-Aldhaif-CV-AR.pdf"><span class="i18n-cvline">View CV (PDF)</span> ↗</a>
     </div>
   </div>
