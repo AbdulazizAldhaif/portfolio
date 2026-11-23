@@ -96,6 +96,9 @@ img{max-width:100%}
 .stat-n{font-size:30px;font-weight:600;color:var(--gold);font-variant-numeric:tabular-nums;line-height:1}
 .stat-suffix{font-size:16px;font-weight:500}
 .stat-label{margin-top:6px;font-family:var(--mono);font-size:9px;letter-spacing:.14em;color:rgba(242,237,228,.5)}
+/* Optional caption above a card's numbers (e.g. "the product in numbers") */
+.stats-cap{margin-top:28px;font-size:9.5px;letter-spacing:.18em;color:rgba(242,237,228,.45)}
+.stats-cap+.stats{margin-top:10px}
 .stack{margin:18px 0 0;font-family:var(--mono);font-size:11px;color:rgba(242,237,228,.55)}
 .cta{margin-top:20px}
 .btn{display:inline-flex;align-items:center;gap:8px;padding:13px 18px;border:1px solid rgba(231,180,90,.55);color:var(--gold);font-family:var(--mono);font-size:11.5px;text-decoration:none}
@@ -282,7 +285,7 @@ html.ar .tour-text{line-height:1.75}
 /* Case study: on mobile the side/main wrappers vanish and flex ordering keeps the reading order */
 .case{display:flex;flex-direction:column}
 .case-side,.case-main{display:contents}
-.case-top{order:1}.case-title{order:2}.case-meta{order:3}.block{order:5}.block-first{order:4}.quote{order:6}.stats{order:7}.stack{order:8}.cta{order:9}
+.case-top{order:1}.case-title{order:2}.case-meta{order:3}.block{order:5}.block-first{order:4}.quote{order:6}.stats-cap,.stats{order:7}.stack{order:8}.cta{order:9}
 
 /* Desktop — use the whole screen */
 @media (min-width:1024px){
@@ -377,6 +380,10 @@ html.ar .case-ar{font-family:var(--sans);font-weight:600;letter-spacing:-.01em}
 html.ar .block p{line-height:1.85}
 html.ar .quote p{font-size:17.5px;line-height:1.65}
 html.ar .stat-label{font-family:var(--arabic);letter-spacing:0;font-size:11px}
+html.ar .stats-cap{font-size:12px}
+/* Stack line / button that carry words rather than tech names or a URL */
+html.ar .stack-text{font-family:var(--arabic);font-size:12.5px}
+html.ar .btn-text{font-family:var(--arabic);font-size:13.5px}
 html.ar .lane-label{font-family:var(--arabic);letter-spacing:0;font-size:13.5px}
 html.ar .card-title{font-family:var(--sans)}
 html.ar .card-ar{font-family:var(--sans);font-weight:600}

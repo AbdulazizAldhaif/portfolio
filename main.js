@@ -38,29 +38,43 @@
     'CV (PDF)': 'السيرة الذاتية (PDF)', 'Save contact': 'حفظ جهة الاتصال'
   };
 
+  // Order matches the <article class="case"> elements in index.html.
+  // Optional fields: stack / cta (translated stack line and button label), statsCap
+  // (caption above the numbers), quote (cards without one omit the decision block).
   const CASES = [
     {
-      title: { en: 'Eidaah', ar: 'إيضاح' }, tag: { en: 'إيضاح', ar: 'Eidaah' },
-      kicker: { en: 'SELECTED WORK — 01', ar: 'أعمال مختارة — 01' },
-      meta: { en: 'AI study platform for Arabic-speaking university students — built by a 3-person team.', ar: 'منصة مذاكرة بالذكاء الاصطناعي لطلاب الجامعات الناطقين بالعربية — طوّره فريق من 3 أفراد.' },
-      problem: { en: 'Course material lives in scattered slides and videos, with no interactive way to study it in Arabic.', ar: 'المحتوى الدراسي مبعثر بين شرائح وفيديوهات، دون طريقة تفاعلية لمذاكرته بالعربية.' },
-      did: { en: 'Designed the 13-table database schema and security policies, built login and content governance — students upload, admins approve — and redesigned the analyzer that turns any PDF or PPTX into a 7-stage guided study flow with auto-graded quizzes.', ar: 'صممت قاعدة البيانات بجداولها الثلاثة عشر وسياسات الأمان، وبنيت تسجيل الدخول وحوكمة المحتوى — الطلاب يرفعون والمشرفون يعتمدون — وأعدت تصميم المحلل الذي يحول أي ملف PDF أو PPTX إلى مسار مذاكرة موجه من 7 مراحل مع اختبارات مصححة تلقائيًا.' },
-      quote: { en: 'Every file is processed by the LLM <span class="gold">once at approval</span> and stored, so AI cost stays flat no matter how many students study it.', ar: 'كل ملف تتم معالجته بالنموذج اللغوي <span class="gold">مرة واحدة عند الاعتماد</span> ثم يُخزَّن، فتبقى تكلفة الذكاء الاصطناعي ثابتة مهما زاد عدد الطلاب.' },
-      stats: { en: ['API ENDPOINTS', 'SCREENS', 'DB TABLES', 'PASSING TESTS'], ar: ['نقطة API', 'شاشة', 'جدول قاعدة بيانات', 'اختبارًا ناجحًا'] }
-    },
-    {
       title: { en: "Sahifat Itma'inn", ar: 'صحيفة اطمئن' }, tag: { en: 'صحيفة اطمئن', ar: "Sahifat Itma'inn" },
-      kicker: { en: 'SELECTED WORK — 02', ar: 'أعمال مختارة — 02' },
+      kicker: { en: 'SELECTED WORK — 01', ar: 'أعمال مختارة — 01' },
       meta: { en: 'Bilingual newspaper platform plus internal newsroom system — built solo.', ar: 'منصة صحيفة ثنائية اللغة مع نظام داخلي لغرفة الأخبار — بناء فردي.' },
       problem: { en: '34 volunteers coordinated through spreadsheets and chat; articles had no tracked path to publication.', ar: '34 متطوعًا ينسقون عبر جداول ومحادثات؛ والمقالات بلا مسار واضح حتى النشر.' },
-      did: { en: 'Built everything: the public reading site — page-flip reader, offline mode, email-code accounts — and the internal system with role management, schedules, and a 10-station editorial pipeline: writing, sharia review, proofreading, translation and design, plus sign-off stations where each section’s lead approves the work.', ar: 'بنيت كل شيء: موقع القراءة العام — قارئ بتقليب الصفحات، ووضع دون اتصال، وحسابات برمز البريد — والنظام الداخلي بإدارة الأدوار والجداول ومسار تحريري من 10 محطات: كتابة، ومراجعة شرعية، وتدقيق، وترجمة، وتصميم، مع محطات اعتماد يعتمد فيها مسؤول كل قسم العمل.' },
+      did: { en: 'Built everything: the public reading site — page-flip reader, offline mode, email-code accounts — and the internal system with role management, 72 access policies, schedules, and a 10-station editorial pipeline: writing, sharia review, proofreading, translation and design, plus sign-off stations where each section’s lead approves the work.', ar: 'بنيت كل شيء: موقع القراءة العام — قارئ بتقليب الصفحات، ووضع دون اتصال، وحسابات برمز البريد — والنظام الداخلي بإدارة الأدوار و72 سياسة وصول والجداول ومسار تحريري من 10 محطات: كتابة، ومراجعة شرعية، وتدقيق، وترجمة، وتصميم، مع محطات اعتماد يعتمد فيها مسؤول كل قسم العمل.' },
       quote: { en: 'Permissions resolve through <span class="gold">one SQL function</span> mirrored client-side, so unknown roles fail closed and can never escalate.', ar: 'الصلاحيات تُحسم عبر <span class="gold">دالة SQL واحدة</span> تنعكس في الواجهة، فأي دور غير معروف يُرفض تلقائيًا ولا يمكنه تصعيد صلاحياته.' },
       stats: { en: ['SCREENS × LANGS', 'DB TABLES', 'COMMITS', 'DEVELOPER'], ar: ['شاشة × لغتين', 'جدول قاعدة بيانات', 'إيداعًا', 'مطور'] }
     },
     {
-      title: { en: 'Masari', ar: 'مساري' }, tag: { en: 'مساري', ar: 'Masari' },
+      title: { en: 'Deep Data SA', ar: 'عمق' }, tag: { en: 'عمق', ar: 'Deep Data SA' },
+      kicker: { en: 'SELECTED WORK — 02', ar: 'أعمال مختارة — 02' },
+      meta: { en: 'IS strategy case study of a Saudi startup that provides AI solutions to companies — team of 5; I led the team.', ar: 'دراسة حالة في استراتيجية نظم المعلومات لشركة سعودية ناشئة تقدم حلول الذكاء الاصطناعي للشركات — فريق من 5؛ قدت الفريق.' },
+      stack: { en: 'Strategy & Business Models · July 2026', ar: 'مقرر الاستراتيجية ونماذج الأعمال · يوليو 2026' },
+      cta: { en: 'Report & slides ↗', ar: 'التقرير والعرض ↗' },
+      problem: { en: 'A Saudi startup sells AI solutions to companies: what IS strategy sits behind its platform, and what stands between companies and adopting it?', ar: 'شركة سعودية ناشئة تبيع حلول الذكاء الاصطناعي للشركات: ما استراتيجية نظم المعلومات خلف منصتها، وما الذي يحول بين الشركات وتبنّيها؟' },
+      did: { en: 'Led the team that interviewed the founder and CEO in person, analyzed the IS strategy behind their platform, alPlatform.ai, and identified 6 adoption challenges, matching each one with an IS activity.', ar: 'قدت الفريق الذي قابل المؤسس والرئيس التنفيذي حضوريًا، وحلل استراتيجية نظم المعلومات خلف منصتهم alPlatform.ai، وحدد 6 تحديات في التبني وربط كل تحدٍّ منها بنشاط من أنشطة نظم المعلومات.' },
+      stats: { en: ['FOUNDER INTERVIEW', 'CHALLENGES', 'IS ACTIVITIES', 'TEAM MEMBERS'], ar: ['مقابلة مع المؤسس', 'تحديات', 'أنشطة نظم معلومات', 'أعضاء في الفريق'] }
+    },
+    {
+      title: { en: 'Eidaah', ar: 'إيضاح' }, tag: { en: 'إيضاح', ar: 'Eidaah' },
       kicker: { en: 'SELECTED WORK — 03', ar: 'أعمال مختارة — 03' },
-      meta: { en: 'Turns an IMSIU degree plan into an interactive term-by-term graduation roadmap — 2-person project; I owned logic and data quality.', ar: 'يحوّل الخطة الدراسية في جامعة الإمام إلى خارطة تخرج تفاعلية فصلًا بفصل — مشروع من شخصين؛ توليت المنطق وجودة البيانات.' },
+      meta: { en: 'AI study platform for Arabic-speaking university students, built by the Enjaz Club AI team across three versions.', ar: 'منصة مذاكرة بالذكاء الاصطناعي لطلاب الجامعات الناطقين بالعربية، طوّرها فريق الذكاء الاصطناعي في نادي إنجاز عبر ثلاثة إصدارات.' },
+      problem: { en: 'Course material lives in scattered slides and videos, with no interactive way to study it in Arabic.', ar: 'المحتوى الدراسي مبعثر بين شرائح وفيديوهات، دون طريقة تفاعلية لمذاكرته بالعربية.' },
+      did: { en: 'Designed the 13-table database schema and security policies; built login, including Google sign-in set up in Google Cloud Console; built content governance — students upload, admins approve, and a university’s course content can be limited to students who verify that university’s email, so IMSIU content stays with IMSIU students; and built the redesigned analyzer (front end and back end) that turns any PDF or PPTX into a 7-stage guided study flow with auto-graded quizzes.', ar: 'صممت قاعدة البيانات بجداولها الثلاثة عشر وسياسات الأمان، وبنيت تسجيل الدخول ومنه الدخول بحساب Google الذي أعددته في Google Cloud Console، وبنيت حوكمة المحتوى — الطلاب يرفعون والمشرفون يعتمدون، ويمكن قصر محتوى مقررات أي جامعة على طلابها الذين يوثّقون بريدها الجامعي، فمحتوى جامعة الإمام لطلابها فقط — وبنيت المحلل بتصميمه الجديد (الواجهة الأمامية والخلفية) الذي يحول أي ملف PDF أو PPTX إلى مسار مذاكرة موجه من 7 مراحل مع اختبارات مصححة تلقائيًا.' },
+      quote: { en: 'Every file is processed by the LLM <span class="gold">once at approval</span> and stored, so AI cost stays flat no matter how many students study it.', ar: 'كل ملف تتم معالجته بالنموذج اللغوي <span class="gold">مرة واحدة عند الاعتماد</span> ثم يُخزَّن، فتبقى تكلفة الذكاء الاصطناعي ثابتة مهما زاد عدد الطلاب.' },
+      statsCap: { en: 'THE PRODUCT IN NUMBERS', ar: 'المنتج بالأرقام' },
+      stats: { en: ['API ENDPOINTS', 'SCREENS', 'DB TABLES', 'PASSING TESTS'], ar: ['نقطة API', 'شاشة', 'جدول قاعدة بيانات', 'اختبارًا ناجحًا'] }
+    },
+    {
+      title: { en: 'Masari', ar: 'مساري' }, tag: { en: 'مساري', ar: 'Masari' },
+      kicker: { en: 'SELECTED WORK — 04', ar: 'أعمال مختارة — 04' },
+      meta: { en: 'Turns an IMSIU degree plan into an interactive term-by-term graduation roadmap — team of 3; I owned logic and data quality.', ar: 'يحوّل الخطة الدراسية في جامعة الإمام إلى خارطة تخرج تفاعلية فصلًا بفصل — فريق من 3؛ توليت المنطق وجودة البيانات.' },
       problem: { en: 'Students plan registration from static PDFs and guess at prerequisite chains; one wrong guess delays graduation.', ar: 'يخطط الطلاب لتسجيلهم اعتمادًا على ملفات PDF ثابتة ويخمنون سلاسل المتطلبات السابقة؛ تخمين واحد خاطئ يؤخر التخرج.' },
       did: { en: 'Extracted the scheduling logic into tested modules with a 49-test CI suite, built prerequisite overrides and fastest-graduation mode, and wrote a validator that cross-checks our data against official PDFs — it caught 4 errors in the university’s own documents.', ar: 'فصلت منطق الجدولة في وحدات مختبرة بحزمة CI من 49 اختبارًا، وبنيت خاصية تجاوز المتطلبات السابقة ووضع أسرع تخرج، وكتبت مدققًا يقارن بياناتنا بملفات PDF الرسمية — فاكتشف 4 أخطاء في وثائق الجامعة نفسها.' },
       quote: { en: '<span class="gold">Never trust the source data.</span>', ar: '<span class="gold">لا تثق ببيانات المصدر أبدًا.</span>' },
@@ -94,7 +108,7 @@
     alsoTag: { en: 'أعمال أخرى', ar: 'ALSO BUILT' },
     alula: { en: 'Full-stack PHP/MySQL tourism site with booking, reviews, and a bilingual chatbot.', ar: 'موقع سياحي متكامل بـ PHP/MySQL مع حجوزات وتقييمات وروبوت محادثة ثنائي اللغة.' },
     sar: { en: 'Responsive front end simulating the Saudi Railways portal, framework-free.', ar: 'واجهة أمامية متجاوبة تحاكي بوابة الخطوط الحديدية السعودية، بدون أطر عمل.' },
-    athar: { en: 'Arabic-first e-commerce storefront for a Saudi oud & perfume brand: filterable catalogue, guest cart and checkout with shipping rules, order tracking by order number + phone, and customer reviews. Payments simulated by design (course project). Next.js, Tailwind, Supabase with row-level security.', ar: 'متجر إلكتروني يضع العربية أولًا لعلامة سعودية للعود والعطور: كتالوج قابل للتصفية، وسلة وإتمام شراء كضيف مع قواعد شحن، وتتبع الطلب برقم الطلب والجوال، وتقييمات العملاء. الدفع محاكاة مقصودة (مشروع مقرر دراسي). Next.js وTailwind وSupabase مع أمان على مستوى الصفوف.' },
+    athar: { en: 'Arabic-first e-commerce storefront for a Saudi oud & perfume brand: filterable catalogue, guest cart and checkout with shipping rules, order tracking by order number + phone, and customer reviews. Payments simulated by design. Course project, team of 4: I was the sole developer, coordinated the team, and interviewed Lucidya’s co-founder and CTO for the business plan. Next.js, Tailwind, Supabase with row-level security.', ar: 'متجر إلكتروني يضع العربية أولًا لعلامة سعودية للعود والعطور: كتالوج قابل للتصفية، وسلة وإتمام شراء كضيف مع قواعد شحن، وتتبع الطلب برقم الطلب والجوال، وتقييمات العملاء. الدفع محاكاة مقصودة. مشروع مقرر، فريق من 4: كنت المطور الوحيد، ونسّقت عمل الفريق، وقابلت الشريك المؤسس والمدير التقني لشركة لوسيديا لخطة العمل. Next.js وTailwind وSupabase مع أمان على مستوى الصفوف.' },
     contactK: { en: 'CONTACT', ar: 'تواصل' },
     contactTag: { en: 'تحدث معي', ar: 'CONTACT' },
     talk: { en: 'Talk to me', ar: 'تحدث معي' },
@@ -119,14 +133,14 @@
       { sel: '.cv-btn', t: 'My CV', d: 'Opens as a PDF, in the language you’re reading.' },
       { sel: '.quicknav', t: 'Jump anywhere', d: 'Work, other projects, contact — one tap. Replay this tour from here too.' },
       { sel: '.lanes', t: 'Pick a topic, then a channel', d: 'Hiring, coop or collaboration — WhatsApp or email, with the message already written for you.', scroll: true },
-      { sel: '.social', t: 'One tap to reach me', d: 'WhatsApp, LinkedIn, GitHub, email — each icon opens directly.' }
+      { sel: '.social', t: 'One tap to reach me', d: 'WhatsApp, LinkedIn, GitHub, email, my CV, and a contact card to save — each icon opens directly.' }
     ] },
     ar: { skip: 'تخطي الجولة', next: 'التالي', done: 'العودة للأعلى', of: 'من', steps: [
       { sel: '.lang-pill', t: 'عربي أو English — في أي وقت', d: 'بدّل اللغة من هنا. كل شيء يتغير، حتى رسائل واتساب والبريد الجاهزة.' },
       { sel: '.cv-btn', t: 'سيرتي الذاتية', d: 'تُفتح بصيغة PDF باللغة التي تقرأ بها.' },
       { sel: '.quicknav', t: 'انتقل إلى أي قسم', d: 'أعمالي، مشاريع أخرى، تواصل — بنقرة واحدة. ويمكنك إعادة هذه الجولة من هنا.' },
       { sel: '.lanes', t: 'اختر الموضوع ثم القناة', d: 'توظيف أو تدريب أو تعاون — واتساب أو بريد، والرسالة جاهزة لك.', scroll: true },
-      { sel: '.social', t: 'نقرة واحدة للوصول إليّ', d: 'واتساب، لينكدإن، جيت هب، البريد — كل أيقونة تفتح مباشرة.' }
+      { sel: '.social', t: 'نقرة واحدة للوصول إليّ', d: 'واتساب، لينكدإن، جيت هب، البريد، سيرتي الذاتية، وبطاقة اتصال تحفظها — كل أيقونة تفتح مباشرة.' }
     ] }
   };
 
@@ -178,10 +192,15 @@
       const kickers = $$('.kicker.dim', caseEl);
       kickers[0].textContent = T.problemK[next];
       kickers[1].textContent = T.didK[next];
-      $('.kicker.gold-dim', caseEl).textContent = T.quoteK[next];
       $('.problem', caseEl).textContent = c.problem[next];
       $('.did', caseEl).textContent = c.did[next];
-      $('.quote p', caseEl).innerHTML = c.quote[next];
+      if (c.quote) {
+        $('.kicker.gold-dim', caseEl).textContent = T.quoteK[next];
+        $('.quote p', caseEl).innerHTML = c.quote[next];
+      }
+      if (c.stack) $('.stack', caseEl).textContent = c.stack[next];
+      if (c.cta) $('.cta .btn', caseEl).textContent = c.cta[next];
+      if (c.statsCap) $('.stats-cap', caseEl).textContent = c.statsCap[next];
       $$('.stat-label', caseEl).forEach((el, j) => { el.textContent = c.stats[next][j]; });
     });
 
@@ -593,23 +612,26 @@
       ar = $('.case-ar', caseEl), caseMeta = $('.case-meta', caseEl),
       blocks = $$('.block', caseEl), quote = $('.quote', caseEl),
       stats = $('.stats', caseEl), cells = $$('.stat', caseEl),
-      stack = $('.stack', caseEl), cta = $('.cta', caseEl);
+      stack = $('.stack', caseEl), cta = $('.cta', caseEl),
+      cap = $('.stats-cap', caseEl);
+    // Logo, decision quote and stats caption are optional per card
+    const statsIn = [cap, stats].filter(Boolean);
 
-    let rule = $('.q-rule', quote);
-    if (!rule) {
+    let rule = quote && $('.q-rule', quote);
+    if (quote && !rule) {
       rule = document.createElement('span');
       rule.className = 'q-rule';
       rule.setAttribute('aria-hidden', 'true');
       quote.prepend(rule);
     }
 
-    gsap.set([top, caseMeta, ...blocks, quote, stack, cta], { autoAlpha: 0, y: 22 });
+    gsap.set([top, caseMeta, ...blocks, quote, stack, cta].filter(Boolean), { autoAlpha: 0, y: 22 });
     gsap.set(titleRow, { autoAlpha: 1, y: 0 });
-    gsap.set(logo, { autoAlpha: 0, scale: 0.7 });
+    if (logo) gsap.set(logo, { autoAlpha: 0, scale: 0.7 });
     gsap.set(ar, { autoAlpha: 0, x: lang === 'ar' ? -26 : 26 });
-    gsap.set(stats, { autoAlpha: 0, y: 14 });
+    gsap.set(statsIn, { autoAlpha: 0, y: 14 });
     gsap.set(cells, { autoAlpha: 0, y: 14, scale: 0.97 });
-    gsap.set(rule, { scaleX: 0, transformOrigin: lang === 'ar' ? '100% 50%' : '0% 50%' });
+    if (rule) gsap.set(rule, { scaleX: 0, transformOrigin: lang === 'ar' ? '100% 50%' : '0% 50%' });
 
     let titleTargets, titleVars;
     if (lang === 'en') {
@@ -626,15 +648,17 @@
       defaults: { ease: 'power3.out', duration: 0.55 },
       scrollTrigger: { trigger: caseEl, start: 'top 72%' }
     });
-    tl.to(top, { autoAlpha: 1, y: 0 }, 0)
-      .to(logo, { autoAlpha: 1, scale: 1, duration: 0.5, ease: 'power3.out' }, 0.05)
-      .to(titleTargets, titleVars, 0.08)
+    tl.to(top, { autoAlpha: 1, y: 0 }, 0);
+    if (logo) tl.to(logo, { autoAlpha: 1, scale: 1, duration: 0.5, ease: 'power3.out' }, 0.05);
+    tl.to(titleTargets, titleVars, 0.08)
       .to(ar, { autoAlpha: 1, x: 0, duration: 0.7 }, 0.24)
       .to(caseMeta, { autoAlpha: 1, y: 0 }, 0.3)
-      .to(blocks, { autoAlpha: 1, y: 0, stagger: 0.14 }, 0.38)
-      .to(quote, { autoAlpha: 1, y: 0, duration: 0.65 }, 0.58)
-      .to(rule, { scaleX: 1, duration: 0.7, ease: 'power2.inOut' }, 0.62)
-      .to(stats, { autoAlpha: 1, y: 0, duration: 0.4 }, 0.72)
+      .to(blocks, { autoAlpha: 1, y: 0, stagger: 0.14 }, 0.38);
+    if (quote) {
+      tl.to(quote, { autoAlpha: 1, y: 0, duration: 0.65 }, 0.58)
+        .to(rule, { scaleX: 1, duration: 0.7, ease: 'power2.inOut' }, 0.62);
+    }
+    tl.to(statsIn, { autoAlpha: 1, y: 0, duration: 0.4, stagger: 0.06 }, 0.72)
       .to(cells, { autoAlpha: 1, y: 0, scale: 1, stagger: 0.08 }, 0.77)
       .to([stack, cta], { autoAlpha: 1, y: 0, stagger: 0.1 }, 0.92);
     return tl;
@@ -708,7 +732,8 @@
   ScrollTrigger.batch(rest, { start: 'top 88%', onEnter: revealBatch, onEnterBack: revealBatch });
   // Anything already scrolled past when this runs (deep link, restored scroll) must not stay hidden
   const abovePassed = (el) => el.getBoundingClientRect().bottom < 0;
-  gsap.set(rest.filter(abovePassed), { autoAlpha: 1, y: 0 });
+  const passed = rest.filter(abovePassed);
+  if (passed.length) gsap.set(passed, { autoAlpha: 1, y: 0 });
   caseState.forEach((s) => { if (abovePassed(s.el)) s.tl.progress(1); });
 
   }
