@@ -34,7 +34,8 @@
     'WhatsApp': 'واتساب', 'LinkedIn': 'لينكدإن', 'GitHub': 'جيت هب', 'Email': 'البريد الإلكتروني',
     'WhatsApp — hiring': 'واتساب — توظيف', 'Email — hiring': 'بريد — توظيف',
     'WhatsApp — coop / training': 'واتساب — تدريب تعاوني', 'Email — coop / training': 'بريد — تدريب تعاوني',
-    'WhatsApp — collaboration': 'واتساب — تعاون', 'Email — collaboration': 'بريد — تعاون'
+    'WhatsApp — collaboration': 'واتساب — تعاون', 'Email — collaboration': 'بريد — تعاون',
+    'CV (PDF)': 'السيرة الذاتية (PDF)', 'Save contact': 'حفظ جهة الاتصال'
   };
 
   const CASES = [
@@ -70,8 +71,6 @@
   const T = {
     city: { en: 'الرياض', ar: 'RIYADH' },
     cv: { en: 'CV', ar: 'السيرة' },
-    cvline: { en: 'View CV (PDF)', ar: 'عرض السيرة الذاتية (PDF)' },
-    vcf: { en: 'Save contact (VCF)', ar: 'حفظ جهة الاتصال (VCF)' },
     hint: { en: 'Scroll to explore', ar: 'مرر للاستكشاف' },
     hintSkip: { en: 'Skip tour', ar: 'تخطي الجولة' },
     hintNext: { en: 'Next', ar: 'التالي' },
@@ -145,8 +144,6 @@
     $$('.lang-opt').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.lang === next)));
     $$('[data-cv-en]').forEach((a) => { a.href = next === 'ar' ? a.dataset.cvAr : a.dataset.cvEn; });
     setText('.i18n-cv', T.cv[next]);
-    setText('.i18n-cvline', T.cvline[next]);
-    setText('.i18n-vcf', T.vcf[next]);
     setText('.i18n-hint', T.hint[next]);
     setText('.i18n-hint-skip', T.hintSkip[next]);
     setText('.i18n-hint-next', T.hintNext[next]);

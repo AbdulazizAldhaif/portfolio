@@ -131,7 +131,6 @@ img{max-width:100%}
 .lane-btn:hover{background:var(--gold);color:var(--bg);border-color:var(--gold)}
 .lane-btn:focus-visible{outline:1px solid var(--gold);outline-offset:2px}
 .social{margin-top:18px;display:flex;gap:10px;flex-wrap:wrap}
-.contact-lines{margin-top:14px;display:flex;flex-direction:column;gap:8px;align-items:flex-start}
 
 /* ---------- Footer ---------- */
 .foot{padding-bottom:28px}
@@ -218,6 +217,7 @@ html.ar .progress-fill{transform-origin:100% 50%}
 .lang-opt:hover:not([aria-pressed="true"]){color:var(--gold)}
 .lang-opt:focus-visible{outline:1px solid var(--gold);outline-offset:2px}
 .cv-btn{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;line-height:1;padding:9px 11px;border:1px solid rgba(231,180,90,.5);background:rgba(18,16,12,.75);color:var(--gold);text-decoration:none;transition:background-color .18s cubic-bezier(.33,1,.68,1),color .18s cubic-bezier(.33,1,.68,1)}
+.cv-btn svg{width:15px;height:15px;display:block;flex:none}
 .cv-btn:hover{background:var(--gold);color:var(--bg)}
 .cv-btn:focus-visible{outline:1px solid var(--gold);outline-offset:2px}
 html.ar .cv-btn{padding:7px 11px 8px}
@@ -327,7 +327,6 @@ html.ar .tour-text{line-height:1.75}
   .contact-head{grid-column:1;grid-row:2;margin-top:28px}
   .lanes{grid-column:2;grid-row:2/span 3;grid-template-columns:1fr;align-content:start;margin-top:28px}
   .social{grid-column:1;grid-row:3}
-  .contact-lines{grid-column:1;grid-row:4}
   .portrait{width:120px;height:120px}
   .contact-title{font-size:clamp(38px,3.4vw,52px)}
   .marquee-band{padding:16px 0}
